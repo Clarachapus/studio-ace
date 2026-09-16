@@ -3,7 +3,7 @@
  * proxy.ts and in route handlers. The cookie holds an HMAC of the password, never the password.
  */
 export const ADMIN_COOKIE = "ace_admin";
-export const ADMIN_SESSION_DAYS = 30;
+export const ADMIN_SESSION_DAYS = 400;
 
 export async function sessionToken(password: string): Promise<string> {
   const enc = new TextEncoder();
