@@ -1,0 +1,315 @@
+@import "tailwindcss";
+
+/* ---------- studio a.c.e design tokens ----------
+   One palette, two typefaces, three densities (minimal / brut / editorial). */
+:root {
+  --sand: #efe6d8;
+  --cream: #f7f1e7;
+  /* Former orange accents: now bordeaux across the whole site. */
+  --terracotta: #6e1e2b;
+  --terracotta-deep: #4f1520;
+  --brown: #4a2b1f;
+  --black: #1e1512;
+  --ochre: #6e1e2b;
+  --ink: #2a1c16;
+  --ink-soft: rgba(42, 28, 22, 0.62);
+  /* Menu and cursor colour. --menu is the text colour on the page background (lighter by night). */
+  --bordeaux: #6e1e2b;
+  --menu: #6e1e2b;
+
+  /* Theme-aware tokens: one background for the whole site ("day" by default). */
+  --bg: var(--sand);
+  --fg: var(--ink);
+  --fg-soft: rgba(42, 28, 22, 0.62);
+  --line: rgba(42, 28, 22, 0.14);
+
+  --background: var(--bg);
+  --foreground: var(--fg);
+}
+
+/* Night: the deep blue of the studio a.c.e Instagram logo, with cream ink. */
+:root[data-theme="dark"] {
+  --bg: #112f44;
+  --fg: #f1e8da;
+  --fg-soft: rgba(241, 232, 218, 0.62);
+  --line: rgba(241, 232, 218, 0.14);
+  --menu: #e7a6b1;
+  color-scheme: dark;
+}
+
+/* Areas that must stay light whatever the theme (the local editor). */
+.theme-light-scope {
+  --bg: var(--sand);
+  --fg: var(--ink);
+  --fg-soft: rgba(42, 28, 22, 0.62);
+  --line: rgba(42, 28, 22, 0.14);
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-sand: var(--sand);
+  --color-cream: var(--cream);
+  --color-terracotta: var(--terracotta);
+  --color-terracotta-deep: var(--terracotta-deep);
+  --color-brown: var(--brown);
+  --color-black: var(--black);
+  --color-ochre: var(--ochre);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-line: var(--line);
+  --color-bordeaux: var(--bordeaux);
+  --color-menu: var(--menu);
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-fg-soft: var(--fg-soft);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  /* A single typeface everywhere (Graphik, or its stand-in until the licence is bought). */
+  --font-serif: var(--font-brand), "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--font-brand), "Helvetica Neue", Arial, sans-serif;
+
+  --radius-arch: 999px 999px 0 0;
+}
+
+html {
+  color-scheme: light;
+  scroll-behavior: auto;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Nothing may ever push the page sideways on a phone ("clip" keeps sticky elements working). */
+html,
+body {
+  overflow-x: clip;
+}
+body { -webkit-tap-highlight-color: transparent; }
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.6s ease, color 0.6s ease;
+}
+
+h1, h2, h3, .font-display {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+}
+
+::selection {
+  background: var(--terracotta);
+  color: var(--cream);
+}
+
+/* Section moods: every section shares the site background (the "projects" sand,
+   or the night ground). Minimal / brut / editorial now differ by typography only. */
+.mood-minimal,
+.mood-brut,
+.mood-editorial {
+  background: var(--bg);
+  color: var(--fg);
+  transition: background-color 0.6s ease, color 0.6s ease;
+}
+
+/* Arch mask for images */
+.arch { border-radius: 999px 999px 0 0; overflow: hidden; }
+
+/* Reveal on scroll (GSAP sets the final state; this is the initial state) */
+[data-reveal] { opacity: 0; transform: translateY(24px); }
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { opacity: 1; transform: none; }
+}
+
+/* Editorial */
+.editorial p { font-size: 1.0625rem; line-height: 1.8; }
+.editorial p + p { margin-top: 1.25rem; }
+.dropcap::first-letter {
+  font-family: var(--font-serif);
+  font-size: 4.2em;
+  line-height: 0.8;
+  float: left;
+  margin: 0.08em 0.12em 0 0;
+  color: var(--menu);
+}
+
+/* ---------- Parallax hero (from the client's component) ---------- */
+.parallax { position: relative; background: var(--bg); transition: background-color 0.6s ease; }
+.parallax__header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100svh;
+  min-height: 560px;
+  overflow: hidden;
+}
+.parallax__visuals { position: absolute; inset: 0; width: 100%; height: 100%; }
+.parallax__black-line-overflow {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  z-index: 20;
+  height: 2px;
+  background: var(--bg);
+}
+.parallax__layers { position: absolute; inset: 0; width: 100%; height: 100%; }
+.parallax__layer-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 117.5%;
+  max-width: none;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+}
+/* Day / night hero layers follow the site theme. */
+.hero-day,
+.hero-night { transition: opacity 0.8s ease; }
+.hero-night { opacity: 0; }
+:root[data-theme="dark"] .hero-day { opacity: 0; }
+:root[data-theme="dark"] .hero-night { opacity: 1; }
+/* Vimeo hero: covers the screen whatever the ratio, fades in, tinted to the site's palette. */
+.hero-vimeo { position: absolute; inset: 0; overflow: hidden; background: #1e1b18; }
+.hero-vimeo__poster,
+.hero-vimeo__frame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 0;
+  /* Exactly covers the screen, centred: no zoom, no movement. */
+  width: max(100vw, 100svh * var(--ratio));
+  height: max(100svh, 100vw / var(--ratio));
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.hero-vimeo__poster { object-fit: cover; filter: grayscale(1); }
+.hero-vimeo__frame { opacity: 0; transition: opacity 1.4s ease; filter: grayscale(1); }
+.hero-vimeo--ready .hero-vimeo__frame { opacity: 1; }
+:root[data-theme="dark"] .hero-vimeo__frame,
+:root[data-theme="dark"] .hero-vimeo__poster { filter: grayscale(1) brightness(0.85); }
+
+/* Home "stage": a single still screen with the plain black-and-white video. */
+.parallax--stage .parallax__black-line-overflow { display: none; }
+.parallax--stage .parallax__fade { display: none; }
+.parallax__layer-title {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 1rem;
+  text-align: center;
+}
+.parallax__title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(3rem, 12vw, 10.5rem);
+  line-height: 0.95;
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  color: var(--cream);
+  text-shadow: 0 2px 40px rgba(30, 21, 18, 0.35);
+  margin: 0;
+}
+.parallax__tagline {
+  font-family: var(--font-sans);
+  font-size: clamp(0.75rem, 1.4vw, 1rem);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--cream);
+  opacity: 0.85;
+}
+.parallax__fade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 30;
+  height: 45%;
+  /* The hero melts into the site background (sand by day, dark ground by night). */
+  background: linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--bg) 55%, transparent) 55%, var(--bg) 100%);
+  pointer-events: none;
+}
+/* Tall phone screens: a shorter fade so the foreground layer stays readable. */
+@media (max-width: 767px) {
+  .parallax__fade { height: 28%; }
+}
+.parallax__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 0 2rem;
+  color: var(--fg);
+}
+
+/* ---------- Bordeaux dot cursor (mouse only; the native cursor comes back if JavaScript is off) ---------- */
+@media (pointer: fine) {
+  html.has-custom-cursor,
+  html.has-custom-cursor * {
+    cursor: none !important;
+  }
+}
+.ace-cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 2147483000;
+  width: 14px;
+  height: 14px;
+  border-radius: 9999px;
+  background: var(--bordeaux);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease, width 0.25s ease, height 0.25s ease;
+  will-change: transform;
+}
+.ace-cursor[data-visible="true"] { opacity: 1; }
+.ace-cursor[data-hover="true"] { width: 28px; height: 28px; }
+@media (pointer: coarse) {
+  .ace-cursor { display: none; }
+}
+
+/* ---------- Logo at the bottom centre of the home ----------
+   One transparent PNG used as a stencil, always in the site's cream (day and night). */
+:root { --hero-logo: var(--cream); }
+.hero-logo {
+  position: absolute;
+  left: 50%;
+  bottom: 6.5rem;
+  z-index: 35;
+  width: 3.2rem;
+  aspect-ratio: 420 / 688;
+  transform: translateX(-50%);
+  background-color: var(--hero-logo);
+  -webkit-mask: url("/media/brand/logo-mask.png") center / contain no-repeat;
+  mask: url("/media/brand/logo-mask.png") center / contain no-repeat;
+  pointer-events: none;
+  transition: background-color 0.6s ease;
+}
+@media (min-width: 768px) {
+  .hero-logo { bottom: 2.25rem; width: 4rem; }
+}
+
+/* ---------- studio a.c.e logo in the footer (and 404), bordeaux, centred ---------- */
+.brand-logo {
+  display: block;
+  margin-inline: auto;
+  width: 2.75rem;
+  aspect-ratio: 420 / 688;
+  background-color: var(--menu);
+  -webkit-mask: url("/media/brand/logo-mask.png") center / contain no-repeat;
+  mask: url("/media/brand/logo-mask.png") center / contain no-repeat;
+  transition: background-color 0.6s ease;
+}

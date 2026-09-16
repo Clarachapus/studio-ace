@@ -1,0 +1,121 @@
+{
+  "Nav": {
+    "projects": "Architecture",
+    "sculptures": "Sculpture",
+    "about": "About",
+    "switchLocale": "Français",
+    "toDark": "Switch to night mode",
+    "toLight": "Switch to day mode",
+    "mainNav": "Site sections"
+  },
+  "Home": {
+    "scroll": "Scroll",
+    "soundOn": "Turn sound on",
+    "soundOff": "Mute"
+  },
+  "Projects": {
+    "title": "Architecture",
+    "intro": "Interiors and architecture projects, between Paris and Mexico City.",
+    "all": "All",
+    "types": {
+      "residential": "Residential",
+      "public": "Public",
+      "interior": "Interior",
+      "landscape": "Landscape"
+    },
+    "location": "Location",
+    "year": "Year",
+    "type": "Type",
+    "surface": "Surface",
+    "next": "Next project",
+    "back": "All architecture",
+    "empty": "No projects yet."
+  },
+  "Sculptures": {
+    "title": "Sculpture",
+    "intro": "Plaster and concrete sculptures, inspired by architecture and by the studio's Mexican roots.",
+    "all": "All",
+    "status": {
+      "available": "Available",
+      "sold": "Sold",
+      "commission": "Commission"
+    },
+    "material": "Material",
+    "dimensions": "Dimensions",
+    "year": "Year",
+    "price": "Price",
+    "onRequest": "On request",
+    "request": "Request this piece",
+    "requestSold": "This piece is sold. Ask for a similar one",
+    "back": "All sculptures",
+    "empty": "No sculptures yet."
+  },
+  "About": {
+    "acronymTitle": "A. C. E.",
+    "arch": "Arch",
+    "cactus": "Cactus",
+    "stairs": "Stairs",
+    "storyTitle": "The story",
+    "workshopTitle": "The workshop",
+    "teamTitle": "The team",
+    "contactTitle": "Get in touch",
+    "email": "Email",
+    "phone": "Phone",
+    "instagram": "Instagram",
+    "projectsTitle": "Projects",
+    "exhibitionsTitle": "Exhibitions",
+    "pageLabel": "About"
+  },
+  "Contact": {
+    "title": "Contact",
+    "intro": "An architecture project, a piece to commission, a question: write to us.",
+    "details": "Details",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone (optional)",
+      "projectType": "Project type",
+      "projectTypes": {
+        "residential": "Residential",
+        "public": "Public",
+        "interior": "Interior",
+        "landscape": "Landscape",
+        "sculpture": "Sculpture",
+        "other": "Other"
+      },
+      "location": "Project location (optional)",
+      "budget": "Indicative budget (optional)",
+      "budgets": {
+        "unknown": "Not sure yet",
+        "lt50": "Under €50,000",
+        "50to200": "€50,000 to €200,000",
+        "200to500": "€200,000 to €500,000",
+        "gt500": "Over €500,000"
+      },
+      "piece": "Piece",
+      "message": "Message",
+      "consent": "I agree that this information is used to answer my request.",
+      "submit": "Send",
+      "sending": "Sending…",
+      "success": "Thank you, your message is on its way. We will get back to you shortly.",
+      "error": "Sending failed. Try again or email us directly.",
+      "required": "This field is required",
+      "invalidEmail": "Invalid email",
+      "tooShort": "Message too short"
+    }
+  },
+  "Footer": {
+    "rights": "All rights reserved.",
+    "legal": "Legal notice",
+    "privacy": "Privacy"
+  },
+  "Legal": {
+    "title": "Legal notice",
+    "privacyTitle": "Privacy policy"
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "text": "This page does not exist or has moved.",
+    "home": "Back to home"
+  }
+}

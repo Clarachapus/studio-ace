@@ -1,0 +1,121 @@
+{
+  "Nav": {
+    "projects": "Architecture",
+    "sculptures": "Sculpture",
+    "about": "À propos",
+    "switchLocale": "English",
+    "toDark": "Passer en mode nuit",
+    "toLight": "Passer en mode jour",
+    "mainNav": "Rubriques du site"
+  },
+  "Home": {
+    "scroll": "Défiler",
+    "soundOn": "Activer le son",
+    "soundOff": "Couper le son"
+  },
+  "Projects": {
+    "title": "Architecture",
+    "intro": "Intérieurs et projets d'architecture, entre Paris et Mexico.",
+    "all": "Tous",
+    "types": {
+      "residential": "Résidentiel",
+      "public": "Public",
+      "interior": "Intérieur",
+      "landscape": "Paysage"
+    },
+    "location": "Lieu",
+    "year": "Année",
+    "type": "Type",
+    "surface": "Surface",
+    "next": "Projet suivant",
+    "back": "Toute l'architecture",
+    "empty": "Aucun projet pour l'instant."
+  },
+  "Sculptures": {
+    "title": "Sculpture",
+    "intro": "Sculptures en plâtre et en béton, inspirées par l'architecture et par les origines mexicaines du studio.",
+    "all": "Toutes",
+    "status": {
+      "available": "Disponible",
+      "sold": "Vendue",
+      "commission": "Sur commande"
+    },
+    "material": "Matériau",
+    "dimensions": "Dimensions",
+    "year": "Année",
+    "price": "Prix",
+    "onRequest": "Sur demande",
+    "request": "Demander cette pièce",
+    "requestSold": "Cette pièce est vendue. Demander une pièce similaire",
+    "back": "Toutes les sculptures",
+    "empty": "Aucune sculpture pour l'instant."
+  },
+  "About": {
+    "acronymTitle": "A. C. E.",
+    "arch": "Arche",
+    "cactus": "Cactus",
+    "stairs": "Escalier",
+    "storyTitle": "L'histoire",
+    "workshopTitle": "L'atelier",
+    "teamTitle": "L'équipe",
+    "contactTitle": "Nous joindre",
+    "email": "Email",
+    "phone": "Téléphone",
+    "instagram": "Instagram",
+    "projectsTitle": "Projets",
+    "exhibitionsTitle": "Expositions",
+    "pageLabel": "À propos"
+  },
+  "Contact": {
+    "title": "Contact",
+    "intro": "Un projet d'architecture, une pièce à commander, une question : écrivez-nous.",
+    "details": "Coordonnées",
+    "form": {
+      "name": "Nom",
+      "email": "Email",
+      "phone": "Téléphone (optionnel)",
+      "projectType": "Type de projet",
+      "projectTypes": {
+        "residential": "Résidentiel",
+        "public": "Public",
+        "interior": "Intérieur",
+        "landscape": "Paysage",
+        "sculpture": "Sculpture",
+        "other": "Autre"
+      },
+      "location": "Lieu du projet (optionnel)",
+      "budget": "Budget indicatif (optionnel)",
+      "budgets": {
+        "unknown": "Je ne sais pas encore",
+        "lt50": "Moins de 50 000 €",
+        "50to200": "50 000 à 200 000 €",
+        "200to500": "200 000 à 500 000 €",
+        "gt500": "Plus de 500 000 €"
+      },
+      "piece": "Pièce",
+      "message": "Message",
+      "consent": "J'accepte que ces informations soient utilisées pour répondre à ma demande.",
+      "submit": "Envoyer",
+      "sending": "Envoi…",
+      "success": "Merci, votre message est bien parti. Nous revenons vers vous rapidement.",
+      "error": "L'envoi a échoué. Réessayez ou écrivez-nous directement par email.",
+      "required": "Ce champ est requis",
+      "invalidEmail": "Email invalide",
+      "tooShort": "Message trop court"
+    }
+  },
+  "Footer": {
+    "rights": "Tous droits réservés.",
+    "legal": "Mentions légales",
+    "privacy": "Confidentialité"
+  },
+  "Legal": {
+    "title": "Mentions légales",
+    "privacyTitle": "Politique de confidentialité"
+  },
+  "NotFound": {
+    "title": "Page introuvable",
+    "text": "Cette page n'existe pas ou a été déplacée.",
+    "home": "Retour à l'accueil"
+  }
+}
