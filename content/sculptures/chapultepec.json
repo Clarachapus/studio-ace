@@ -1,0 +1,23 @@
+{
+  "slug": "chapultepec",
+  "material": "Plâtre pigmenté",
+  "dimensions": "11 × 11 × 60 cm",
+  "year": 2024,
+  "status": "available",
+  "price": null,
+  "images": [
+    "/media/sculptures/chapultepec/01-chapultepec.webp"
+  ],
+  "featured": true,
+  "order": 1,
+  "fr": {
+    "title": "Chapultepec",
+    "summary": "Édition limitée à 20 pièces.",
+    "description": "Colonne en plâtre pigmenté, percée d'une ouverture sur un escalier intérieur. Édition limitée à 20 pièces, Paris, 2024."
+  },
+  "en": {
+    "title": "Chapultepec",
+    "summary": "Limited edition of 20 pieces.",
+    "description": "Pigmented plaster column, opened onto an inner stair. Limited edition of 20 pieces, Paris, 2024."
+  }
+}

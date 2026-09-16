@@ -1,0 +1,24 @@
+{
+  "slug": "escalera",
+  "material": "Terre cuite, chaux",
+  "dimensions": "45 × 45 × 120 cm",
+  "year": 2024,
+  "status": "sold",
+  "price": 3800,
+  "images": [
+    "/media/sculptures/escalera/01.webp",
+    "/media/sculptures/escalera/02.webp"
+  ],
+  "featured": true,
+  "order": 4,
+  "fr": {
+    "title": "Escalera",
+    "summary": "Escalier tournant en marches pleines, patine à la chaux.",
+    "description": "[À REMPLIR] Décrivez la pièce : l'intention, la terre utilisée, la cuisson, la finition, et son histoire."
+  },
+  "en": {
+    "title": "Escalera",
+    "summary": "Winding stair in solid steps, lime patina.",
+    "description": "[TO FILL] Describe the piece: intent, clay used, firing, finish, and its story."
+  }
+}

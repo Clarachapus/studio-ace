@@ -1,0 +1,120 @@
+{
+  "images": {
+    "portrait": "/media/about/portrait-clara.webp",
+    "workshop": "/media/about/workshop.webp"
+  },
+  "fr": {
+    "title": "Clara Chapus",
+    "intro": "Clara Chapus est architecte, urbaniste et artiste française. Elle travaille entre Paris et Mexico.",
+    "acronym": {
+      "arch": "L'arche : le passage, le seuil, la courbe qui accueille. Elle revient dans nos plans comme dans nos pièces.",
+      "cactus": "Le cactus : la ligne verticale, la patience, ce qui pousse dans le sec. Le rappel du Mexique qui nourrit le studio.",
+      "stairs": "L'escalier : le rythme, la marche, la lumière qui descend par paliers. Notre façon de composer l'espace."
+    },
+    "story": [
+      "Ces quatre dernières années, elle a travaillé sur plusieurs projets d'architecture au Mexique avec Naso et Frida Escobedo, dont la scénographie de l'exposition Cartier au musée Jumex et la rénovation de la galerie Lago Algo. Elle a ensuite cofondé Collectivo Talacha (« bricoler », travailler avec l'existant), un groupe d'architectes qui mène des projets de transformation, comme un concours pour repenser les tunnels Evangelion à Milan.",
+      "En parallèle de sa pratique d'architecte, elle fonde studio a.c.e en 2020, consacré à la production de sculptures en plâtre et en béton inspirées par l'architecture et par ses origines mexicaines. Ces sculptures cherchent à donner une forme concrète et tangible à des visions de rêves et de voyages, à travers des matériaux bruts, et nourrissent une fascination pour certains éléments architecturaux.",
+      "Ces objets s'inspirent fortement du travail d'architectes comme Luis Barragán, Ricardo Bofill et Aldo Rossi. Une partie de ces pièces a été présentée à Mexico lors d'une exposition organisée par le collectif Mujeres Creadoras.",
+      "studio a.c.e ouvre aujourd'hui une nouvelle phase de travail : explorer et expérimenter de nouveaux matériaux, de nouvelles échelles et de nouvelles techniques, pour produire des sculptures autour de thèmes comme la ruine, la notion de monument et la transformation des espaces existants, tout en préservant la part d'imaginaire qui caractérise son travail."
+    ],
+    "workshop": "[À REMPLIR] L'atelier : où il se trouve, comment on y travaille la terre, les cuissons, les outils.",
+    "team": [
+      {
+        "name": "[Prénom Nom]",
+        "role": "Architecte, fondateur",
+        "bio": "[À REMPLIR]"
+      },
+      {
+        "name": "[Prénom Nom]",
+        "role": "Sculptrice",
+        "bio": "[À REMPLIR]"
+      }
+    ],
+    "subtitle": "Architecte, urbaniste et artiste · Paris et Mexico",
+    "projects": [
+      {
+        "title": "Appartement Goncourt",
+        "details": "40 m², livré",
+        "place": "Paris",
+        "year": "2025"
+      },
+      {
+        "title": "Appartement Mare",
+        "details": "45 m², en cours",
+        "place": "Paris",
+        "year": "2025"
+      }
+    ],
+    "exhibitions": [
+      {
+        "title": "Mujeres Creadoras",
+        "details": "Exposition collective",
+        "place": "Mexico",
+        "year": "2023"
+      },
+      {
+        "title": "Association AAB",
+        "details": "Exposition collective",
+        "place": "Paris",
+        "year": "2025"
+      }
+    ]
+  },
+  "en": {
+    "title": "Clara Chapus",
+    "intro": "Clara Chapus is a French architect, urbanist and artist, working between Paris and Mexico City.",
+    "acronym": {
+      "arch": "The arch: the passage, the threshold, the curve that welcomes. It returns in our plans as in our pieces.",
+      "cactus": "The cactus: the vertical line, patience, what grows in the dry. The reminder of Mexico that feeds the studio.",
+      "stairs": "The stairs: rhythm, the step, light coming down in landings. Our way of composing space."
+    },
+    "story": [
+      "In the last four years, she has worked on several architectural projects in Mexico with Naso and Frida Escobedo, including the set design of the Cartier exhibition at the Jumex museum and the renovation of the Lago Algo gallery. She then co-founded Collectivo Talacha (meaning tinkering, working with the existing), a group of architects working on projects of transformation, such as a competition to rethink the Evangelion tunnels in Milan.",
+      "While developing her architectural practice, she founded studio a.c.e in 2020, dedicated to the production of plaster and concrete sculptures inspired by architecture and her Mexican origins. These sculptures attempt to give concrete, tangible form to visions of dreams and journeys, through raw materials, and serve a fascination with certain architectural elements.",
+      "These objects are strongly inspired by the work of architects such as Luis Barragán, Ricardo Bofill and Aldo Rossi. Part of these pieces were displayed in Mexico City at an exhibition organised by the Mujeres Creadoras collective.",
+      "studio a.c.e is currently launching a new phase of work, exploring and experimenting with new materials, new scales and new techniques, in order to produce sculptures about a range of topics including the ruin, the notion of monument, and the process of transformation of pre-existing spaces, while preserving the part of imaginary that characterises her work."
+    ],
+    "workshop": "[TO FILL] The workshop: where it is, how clay is worked there, firings, tools.",
+    "team": [
+      {
+        "name": "[First Last]",
+        "role": "Architect, founder",
+        "bio": "[TO FILL]"
+      },
+      {
+        "name": "[First Last]",
+        "role": "Sculptor",
+        "bio": "[TO FILL]"
+      }
+    ],
+    "subtitle": "Architect, urbanist and artist · Paris and Mexico City",
+    "projects": [
+      {
+        "title": "Appartement Goncourt",
+        "details": "40 m², delivered",
+        "place": "Paris",
+        "year": "2025"
+      },
+      {
+        "title": "Appartement Mare",
+        "details": "45 m², in progress",
+        "place": "Paris",
+        "year": "2025"
+      }
+    ],
+    "exhibitions": [
+      {
+        "title": "Mujeres Creadoras",
+        "details": "Collective exhibition",
+        "place": "Mexico City",
+        "year": "2023"
+      },
+      {
+        "title": "Association AAB",
+        "details": "Collective exhibition",
+        "place": "Paris",
+        "year": "2025"
+      }
+    ]
+  }
+}

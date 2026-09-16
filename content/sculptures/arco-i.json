@@ -1,0 +1,24 @@
+{
+  "slug": "arco-i",
+  "material": "Terre cuite, engobe ocre",
+  "dimensions": "62 × 40 × 18 cm",
+  "year": 2025,
+  "status": "available",
+  "price": 2400,
+  "images": [
+    "/media/sculptures/arco-i/01.webp",
+    "/media/sculptures/arco-i/02.webp"
+  ],
+  "featured": true,
+  "order": 2,
+  "fr": {
+    "title": "Arco I",
+    "summary": "Arche pleine en terre cuite, engobe ocre brûlé.",
+    "description": "[À REMPLIR] Décrivez la pièce : l'intention, la terre utilisée, la cuisson, la finition, et son histoire."
+  },
+  "en": {
+    "title": "Arco I",
+    "summary": "Solid terracotta arch, burnt ochre slip.",
+    "description": "[TO FILL] Describe the piece: intent, clay used, firing, finish, and its story."
+  }
+}

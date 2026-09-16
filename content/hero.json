@@ -1,0 +1,14 @@
+{
+  "title": "studio a.c.e",
+  "layer1": "/media/hero/layer-1.webp",
+  "layer2": "/media/hero/layer-2.webp",
+  "layer4": "/media/hero/layer-4.webp",
+  "layer1Night": "/media/hero/layer-1-night.webp",
+  "layer2Night": "/media/hero/layer-2-night.webp",
+  "layer4Night": "/media/hero/layer-4-night.webp",
+  "video": "/media/hero/hero-jour.mp4",
+  "videoNight": "/media/hero/hero-nuit.mp4",
+  "vimeoId": "1222712043",
+  "vimeoRatio": 1.3333,
+  "vimeoPoster": "https://i.vimeocdn.com/video/2195740900-2b231ae29da2a826cc56ba1580a526db771c51030831b4e1cb67cfa7480134e6-d_1280x960?region=us"
+}

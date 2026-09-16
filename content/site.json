@@ -1,0 +1,36 @@
+{
+  "name": "studio a.c.e",
+  "leadsEmail": "contact@studio-ace.example",
+  "publicEmail": "contact@studio-ace.example",
+  "phone": "+33 6 00 00 00 00",
+  "address": [
+    "Atelier studio a.c.e",
+    "[Adresse à compléter]",
+    "France"
+  ],
+  "social": [
+    {
+      "label": "Instagram",
+      "url": "https://www.instagram.com/studio_a.c.e/"
+    }
+  ],
+  "legal": {
+    "companyName": "[Raison sociale à compléter]",
+    "siren": "[SIREN à compléter]",
+    "host": "Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA"
+  },
+  "fr": {
+    "seo": {
+      "title": "studio a.c.e · Architecture & sculpture",
+      "description": "Studio d'architecture et de sculpture en terre cuite. Arche, Cactus, Escalier : des espaces et des pièces inspirés du Mexique."
+    },
+    "tagline": ""
+  },
+  "en": {
+    "seo": {
+      "title": "studio a.c.e · Architecture & sculpture",
+      "description": "Architecture and terracotta sculpture studio. Arch, Cactus, Stairs: spaces and pieces inspired by Mexico."
+    },
+    "tagline": ""
+  }
+}

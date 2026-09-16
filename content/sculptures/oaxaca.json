@@ -1,0 +1,23 @@
+{
+  "slug": "oaxaca",
+  "material": "",
+  "dimensions": "16 × 16 × 16 cm",
+  "year": 2025,
+  "status": "available",
+  "price": null,
+  "images": [
+    "/media/sculptures/oaxaca/01-oaxaca.webp"
+  ],
+  "featured": true,
+  "order": 0,
+  "fr": {
+    "title": "Oaxaca",
+    "summary": "Trois escaliers et deux arches taillés dans un même bloc.",
+    "description": "Pièce réalisée à Paris en 2025. Trois volées de marches montent vers deux ouvertures en arche, dans un bloc de 16 centimètres de côté."
+  },
+  "en": {
+    "title": "Oaxaca",
+    "summary": "Three stairs and two arches carved from a single block.",
+    "description": "Made in Paris in 2025. Three flights of steps rise towards two arched openings, within a 16-centimetre block."
+  }
+}
