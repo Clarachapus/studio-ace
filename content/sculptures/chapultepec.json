@@ -6,7 +6,8 @@
   "status": "available",
   "price": null,
   "images": [
-    "/media/sculptures/chapultepec/01-chapultepec.webp"
+    "/media/sculptures/chapultepec/01-chapultepec.webp",
+    "/media/sculptures/chapultepec/02-img-6338.webp"
   ],
   "featured": true,
   "order": 1,
