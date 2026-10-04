@@ -4,32 +4,33 @@
   "publicEmail": "clara.chapus@free.fr",
   "phone": "+33 6 28 06 95 15",
   "address": [
-    "Atelier studio a.c.e",
-    "[Adresse à compléter]",
+    "Studio a.c.e",
+    "2 rue des Goncourt",
+    "75011 Paris",
     "France"
   ],
   "social": [
     {
-      "label": "Instagram",
+      "label": "studio a.c.e.",
       "url": "https://www.instagram.com/studio_a.c.e/"
     }
   ],
   "legal": {
-    "companyName": "[Raison sociale à compléter]",
-    "siren": "[SIREN à compléter]",
-    "host": "Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA"
+    "companyName": "Studio a.c.e.",
+    "siren": "892 247 693",
+    "host": "OVH"
   },
   "fr": {
     "seo": {
       "title": "studio a.c.e · Architecture & sculpture",
-      "description": "Studio d'architecture et de sculpture en terre cuite. Arche, Cactus, Escalier : des espaces et des pièces inspirés du Mexique."
+      "description": "Studio d'architecture et de sculpture. "
     },
     "tagline": ""
   },
   "en": {
     "seo": {
       "title": "studio a.c.e · Architecture & sculpture",
-      "description": "Architecture and terracotta sculpture studio. Arch, Cactus, Stairs: spaces and pieces inspired by Mexico."
+      "description": "Architecture and sculpture studio. "
     },
     "tagline": ""
   }
