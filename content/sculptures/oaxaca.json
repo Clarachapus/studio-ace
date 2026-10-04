@@ -6,7 +6,10 @@
   "status": "available",
   "price": null,
   "images": [
-    "/media/sculptures/oaxaca/01-oaxaca.webp"
+    "/media/sculptures/oaxaca/01-oaxaca.webp",
+    "/media/sculptures/oaxaca/02-img-7182.webp",
+    "/media/sculptures/oaxaca/03-img-8203.webp",
+    "/media/sculptures/oaxaca/04-img-8204.webp"
   ],
   "featured": true,
   "order": 0,
