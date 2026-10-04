@@ -1,0 +1,27 @@
+{
+  "slug": "goncourt",
+  "type": "residential",
+  "location": "Paris 11",
+  "year": 2026,
+  "surface": 42,
+  "cover": "/media/projects/goncourt/01-capture-d-cran-2026-10-04-19-31-18.webp",
+  "hover": null,
+  "gallery": [
+    "/media/projects/goncourt/02-capture-d-cran-2026-10-04-19-31-41.webp",
+    "/media/projects/goncourt/03-gemini-generated-image-suupi8suupi8suup.webp",
+    "/media/projects/goncourt/04-gemini-generated-image-yzb3cmyzb3cmyzb3.webp",
+    "/media/projects/goncourt/05-img-6816-2.webp"
+  ],
+  "featured": true,
+  "order": 1,
+  "fr": {
+    "title": "Goncourt",
+    "summary": "Rénovation d'un appartement parisien",
+    "description": "Ce projet de rénovation transforme un appartement deux pièces classique en un espace plus ouvert et optimisé. La création d’une chambre en mezzanine permet de libérer la surface au sol et d’agrandir la pièce à vivre.\n\nL’escalier menant à la mezzanine intègre des rangements sur mesure, exploitant chaque mètre carré de manière fonctionnelle. Le budget du projet étant assez limité, il a été décidé de conserver au maximum l’existant (menuiseries, fournitures de la salle de bain, caisons de cuisine, radiateurs...).\n\nLa pièce à vivre et la cuisine ont été repensées pour dégager l’espace et fluidifier les circulations, offrant un volume plus généreux et convivial.\n\nUn travail particulier a été mené sur la lumière naturelle, grâce aux grands vélux qui apportent\nune lumière zénithale abondante et structurent les volumes.\n\nL’ensemble du projet vise à révéler le potentiel de l’appartement en alliant fonctionnalité, clarté et\nqualité spatiale."
+  },
+  "en": {
+    "title": "Goncourt",
+    "summary": "Renovation of a Parisian apartment ",
+    "description": "This renovation project transforms a classic one-bedroom apartment into a more open and optimized space. Creating a mezzanine bedroom frees up floor area and enlarges the living space.\n\nThe staircase leading to the mezzanine incorporates custom-built storage, making functional use of every square meter. Given the project’s limited budget, the decision was made to preserve as much of the existing elements as possible, including the windows and doors, bathroom fixtures, kitchen units, radiators, and other fittings.\n\nThe living area and kitchen were reconfigured to open up the space and improve circulation, creating a more generous and convivial volume.\n\nParticular attention was paid to natural light, with large roof windows bringing in abundant zenithal light and helping to structure the different volumes.\n\nThe project as a whole aims to reveal the apartment’s potential by combining functionality, clarity, and spatial quality."
+  }
+}
