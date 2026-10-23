@@ -32,8 +32,14 @@
       {
         "title": "Association AAB",
         "details": "Exposition collective",
-        "place": "Paris",
+        "place": "Paris XX",
         "year": "2025"
+      },
+      {
+        "title": "TRAM",
+        "details": "Exposition collective chez Tram restaurant",
+        "place": "Paris V ",
+        "year": "2026"
       }
     ],
     "acronym": {
@@ -92,6 +98,12 @@
         "details": "Collective exhibition",
         "place": "Paris",
         "year": "2025"
+      },
+      {
+        "title": "",
+        "details": "",
+        "place": "",
+        "year": ""
       }
     ],
     "acronym": {
