@@ -4,10 +4,11 @@
   "dimensions": "62 × 40 × 18 cm",
   "year": 2025,
   "status": "available",
-  "price": 2400,
+  "price": null,
   "images": [
-    "/media/sculptures/arco-i/01.webp",
-    "/media/sculptures/arco-i/02.webp"
+    "/media/sculptures/arco-i/03-img-7633.webp",
+    "/media/sculptures/arco-i/04-gemini-generated-image-mqj9krmqj9krmqj9.webp",
+    "/media/sculptures/arco-i/05-img-6473.webp"
   ],
   "featured": true,
   "order": 2,
