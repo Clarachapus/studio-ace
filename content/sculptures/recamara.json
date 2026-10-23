@@ -1,0 +1,26 @@
+{
+  "slug": "recamara",
+  "material": "",
+  "dimensions": "",
+  "year": 2024,
+  "status": "commission",
+  "price": null,
+  "images": [
+    "/media/sculptures/recamara/02-chambre-1.webp",
+    "/media/sculptures/recamara/03-chambre-2.webp",
+    "/media/sculptures/recamara/04-chambre-3.webp",
+    "/media/sculptures/recamara/05-chambre-4.webp"
+  ],
+  "featured": false,
+  "order": 0,
+  "fr": {
+    "title": "HHHH",
+    "summary": "hhh",
+    "description": "hhhhh"
+  },
+  "en": {
+    "title": "hhhh",
+    "summary": "hhhh",
+    "description": "hhhh"
+  }
+}
