@@ -51,4 +51,14 @@ describe("FsContentStore", () => {
     expect(meta.format).toBe("webp");
     expect(meta.width).toBe(2400);
   });
+
+  it("gives empty V2 pages until they are saved, and keeps a PDF as is", async () => {
+    expect(await store.getArchitecturePage()).toEqual({ images: [] });
+    expect(await store.getSculpturePage()).toEqual({ groups: [] });
+    await store.saveArchitecturePage({ images: ["/media/architecture/diaporama/01-plan.webp"] });
+    expect((await store.getArchitecturePage()).images).toEqual(["/media/architecture/diaporama/01-plan.webp"]);
+    const saved = await store.uploadPdf("about", "portfolio", Buffer.from("%PDF-1.4"), "Mon Portfolio.pdf");
+    expect(saved).toBe("/media/about/portfolio/mon-portfolio.pdf");
+    expect(await readFile(path.join(dir, "public", saved), "utf8")).toBe("%PDF-1.4");
+  });
 });

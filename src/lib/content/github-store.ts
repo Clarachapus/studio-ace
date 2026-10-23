@@ -1,17 +1,21 @@
 import {
   aboutSchema,
+  architecturePageSchema,
   heroSchema,
+  sculpturePageSchema,
   projectSchema,
   sculptureSchema,
   siteSchema,
   slugSchema,
   type About,
+  type ArchitecturePage,
   type Hero,
+  type SculpturePage,
   type Project,
   type Sculpture,
   type Site,
 } from "./schemas";
-import type { ContentStore, MediaKind } from "./store";
+import { safeBaseName, type ContentStore, type MediaKind } from "./store";
 
 export type GitHubStoreConfig = { token: string; repo: string; branch?: string; fetchImpl?: typeof fetch };
 
@@ -202,6 +206,30 @@ export class GitHubContentStore implements ContentStore {
 
   getHero(): Promise<Hero> {
     return this.mustReadJson("content/hero.json", (r) => heroSchema.parse(r));
+  }
+
+  async getArchitecturePage(): Promise<ArchitecturePage> {
+    return (await this.readJson("content/pages/architecture.json", (r) => architecturePageSchema.parse(r))) ?? architecturePageSchema.parse({});
+  }
+
+  async saveArchitecturePage(page: ArchitecturePage): Promise<void> {
+    await this.put("content/pages/architecture.json", this.jsonBuffer(architecturePageSchema.parse(page)), "Éditeur : images de la page Architecture");
+  }
+
+  async getSculpturePage(): Promise<SculpturePage> {
+    return (await this.readJson("content/pages/sculptures.json", (r) => sculpturePageSchema.parse(r))) ?? sculpturePageSchema.parse({});
+  }
+
+  async saveSculpturePage(page: SculpturePage): Promise<void> {
+    await this.put("content/pages/sculptures.json", this.jsonBuffer(sculpturePageSchema.parse(page)), "Éditeur : photos de groupe des sculptures");
+  }
+
+  async uploadPdf(kind: MediaKind, slug: string, file: File | Buffer, originalName: string): Promise<string> {
+    slugSchema.parse(slug);
+    const input = Buffer.isBuffer(file) ? file : Buffer.from(await file.arrayBuffer());
+    const name = `${safeBaseName(originalName, "document")}.pdf`;
+    await this.put(`public/media/${kind}/${slug}/${name}`, input, `Éditeur : document ${name}`);
+    return `/media/${kind}/${slug}/${name}`;
   }
 
   async uploadImage(kind: MediaKind, slug: string, file: File | Buffer, originalName: string): Promise<string> {

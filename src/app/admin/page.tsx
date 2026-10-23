@@ -9,19 +9,16 @@ export default async function AdminHome() {
     <div>
       <h1 className="text-4xl">Éditeur du site</h1>
       <p className="mt-3 max-w-2xl text-ink-soft">
-        Cette page n&apos;existe qu&apos;en local. Modifie les projets, les sculptures, la page À propos et les infos du site ;
-        les changements sont écrits dans <code>content/</code> et <code>public/media/</code>. Une fois satisfait,
-        demande la mise en ligne.
+        Choisis ce que tu veux modifier. Chaque « Enregistrer » met le site à jour : les changements sont visibles 2 à 3 minutes plus tard.
       </p>
       <div className="mt-10 grid gap-6 sm:grid-cols-2">
-        <Card href="/admin/projects" title="Projets" count={projects.length} />
         <Card href="/admin/sculptures" title="Sculptures" count={sculptures.length} />
+        <Card href="/admin/photos-de-groupe" title="Photos de groupe (page Sculpture)" />
+        <Card href="/admin/architecture" title="Page Architecture (images qui défilent)" />
+        <Card href="/admin/projects" title="Projets d'architecture (fiches, pour plus tard)" count={projects.length} />
         <Card href="/admin/about" title="À propos" />
         <Card href="/admin/site" title="Coordonnées et infos du site" />
       </div>
-      <p className="mt-10 text-sm text-ink-soft">
-        Images du héros : modifie <code>content/hero.json</code> et dépose tes images dans <code>public/media/hero/</code>.
-      </p>
     </div>
   );
 }

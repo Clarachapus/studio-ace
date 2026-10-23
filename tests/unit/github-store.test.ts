@@ -78,7 +78,7 @@ const firstJson = (dir: string) => readdirSync(path.join(root, dir)).find((n) =>
 function setup() {
   const sculptureFile = firstJson("content/sculptures");
   const gh = fakeGitHub({
-    "content/projects/patio-sol.json": read("content/projects/patio-sol.json"),
+    "content/projects/goncourt.json": read("content/projects/goncourt.json"),
     [`content/sculptures/${sculptureFile}`]: read(`content/sculptures/${sculptureFile}`),
     "content/pages/about.json": read("content/pages/about.json"),
     "content/site.json": read("content/site.json"),
@@ -92,11 +92,11 @@ describe("GitHubContentStore (online editor storage)", () => {
   it("reads and saves a project as a commit", async () => {
     const { gh, store } = setup();
     const projects = await store.listProjects();
-    expect(projects.map((p) => p.slug)).toEqual(["patio-sol"]);
-    const project = (await store.getProject("patio-sol"))!;
+    expect(projects.map((p) => p.slug)).toEqual(["goncourt"]);
+    const project = (await store.getProject("goncourt"))!;
     await store.saveProject({ ...project, year: 2031 });
-    expect((await store.getProject("patio-sol"))!.year).toBe(2031);
-    expect(gh.commits).toEqual(["Éditeur : projet « patio-sol »"]);
+    expect((await store.getProject("goncourt"))!.year).toBe(2031);
+    expect(gh.commits).toEqual(["Éditeur : projet « goncourt »"]);
     expect(await store.getProject("inconnu")).toBeNull();
     expect(await store.getProject("../site")).toBeNull();
   });
@@ -134,6 +134,27 @@ describe("GitHubContentStore (online editor storage)", () => {
     await store.deleteSculpture(sculptureSlug);
     expect(await store.listSculptures()).toEqual([]);
     expect([...gh.files.keys()].some((k) => k.includes(`/sculptures/${sculptureSlug}`))).toBe(false);
+  });
+});
+
+describe("GitHubContentStore: V2 pages and documents", () => {
+  it("returns empty pages until they exist, then saves them as commits", async () => {
+    const { gh, store, sculptureSlug } = setup();
+    expect(await store.getArchitecturePage()).toEqual({ images: [] });
+    expect(await store.getSculpturePage()).toEqual({ groups: [] });
+    await store.saveArchitecturePage({ images: ["/media/architecture/diaporama/01-plan.webp"] });
+    await store.saveSculpturePage({ groups: [{ image: "/media/sculptures/groupes/01-a.webp", zones: [{ slug: sculptureSlug, x: 10, y: 20, w: 30, h: 40 }] }] });
+    expect((await store.getArchitecturePage()).images).toHaveLength(1);
+    expect((await store.getSculpturePage()).groups[0].zones[0].slug).toBe(sculptureSlug);
+    expect(gh.commits).toEqual(["Éditeur : images de la page Architecture", "Éditeur : photos de groupe des sculptures"]);
+  });
+
+  it("stores a PDF as is, under a clean file name", async () => {
+    const { gh, store } = setup();
+    const pdf = Buffer.from("%PDF-1.4 portfolio");
+    const saved = await store.uploadPdf("about", "portfolio", pdf, "Portfolio Clara Chapus 2026.PDF");
+    expect(saved).toBe("/media/about/portfolio/portfolio-clara-chapus-2026.pdf");
+    expect(gh.files.get(`public${saved}`)?.toString()).toBe("%PDF-1.4 portfolio");
   });
 });
 

@@ -1,10 +1,14 @@
 import { expect, test } from "@playwright/test";
-import { readdirSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
 
 const jsonFiles = (dir: string) => readdirSync(path.join(process.cwd(), dir)).filter((f) => f.endsWith(".json") && !f.startsWith("._"));
-const sculptureCount = jsonFiles("content/sculptures").length;
-const projectCount = jsonFiles("content/projects").length;
+const readJson = (file: string) => JSON.parse(readFileSync(path.join(process.cwd(), file), "utf8"));
+const sculptures = jsonFiles("content/sculptures").map((f) => readJson(`content/sculptures/${f}`) as { slug: string; images: string[]; fr: { title: string } });
+const photoCount = sculptures.reduce((n, s) => n + s.images.length, 0);
+const visibleText = (page: import("@playwright/test").Page, selector: string) =>
+  page.locator(selector).evaluateAll((els) => els.filter((e) => { const r = e.getBoundingClientRect(); return r.width > 2 && r.height > 2 && (e.textContent ?? "").trim(); }).length);
+const projectSlug = jsonFiles("content/projects")[0]?.replace(/\.json$/, "") ?? "goncourt";
 
 test("home is a single screen: the video, the name and the menu only", async ({ page }) => {
   await page.goto("/fr");
@@ -78,20 +82,36 @@ test("footer shows the studio a.c.e logo centred in bordeaux, and no orange rema
   expect(orange).toBe(0);
 });
 
-test("architecture shows only the projects: no categories, straight edges, aligned grid", async ({ page }) => {
+test("architecture is a white page with one image at a time under 'site en construction' and a crane", async ({ page }) => {
   await page.goto("/fr/architecture");
-  for (const label of ["Tous", "Résidentiel", "Public", "Intérieur", "Paysage"]) {
-    await expect(page.locator("main").getByText(label, { exact: true })).toHaveCount(0);
-  }
-  const frames = page.locator('main a[href^="/fr/architecture/"] > div').first();
-  await expect(frames).toHaveCSS("border-top-left-radius", "0px");
-  const tops = await page.locator('main a[href^="/fr/architecture/"]').evaluateAll((els) => els.slice(0, 2).map((e) => Math.round(e.getBoundingClientRect().top)));
-  if (tops.length === 2) expect(tops[0]).toBe(tops[1]);
+  await expect(page.locator("body")).toHaveCSS("background-color", "rgb(255, 255, 255)");
+  await expect(page.locator("header")).toHaveCSS("background-color", "rgb(255, 255, 255)");
+  expect(await visibleText(page, "main h1")).toBe(0);
+  await expect(page.getByText("ARCHITECTURE", { exact: true })).toHaveCount(0);
+  const show = page.getByTestId("architecture-slideshow");
+  const label = show.getByText("Site en construction");
+  await expect(label).toBeVisible();
+  await expect(label).toHaveCSS("color", "rgb(110, 30, 43)");
+  await expect(show.locator("svg")).toBeVisible();
+  const active = () => show.locator('img[data-active="true"]').getAttribute("src");
+  const first = await active();
+  await expect.poll(active, { timeout: 3500 }).not.toBe(first);
 });
 
-test("sculptures page shows every sculpture", async ({ page }) => {
+test("sculpture page shows every photo of every work, without titles or text, in rows of mixed formats", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/fr/sculptures");
-  await expect(page.locator('main a[href^="/fr/sculptures/"]')).toHaveCount(sculptureCount);
+  const links = page.locator('main ul a[href^="/fr/sculptures/"]');
+  await expect(links).toHaveCount(photoCount);
+  expect(await visibleText(page, "main h1, main h2, main h3, main p")).toBe(0);
+  const boxes = await page.locator("main ul > li[data-kind]").evaluateAll((els) => els.map((e) => { const r = e.getBoundingClientRect(); return { top: Math.round(r.top), w: r.width, h: r.height }; }));
+  const ratios = new Set(boxes.map((b) => (b.w / b.h).toFixed(1)));
+  expect(ratios.size).toBeGreaterThan(1);
+  const firstRow = boxes.filter((b) => b.top === boxes[0].top);
+  expect(firstRow.length).toBeGreaterThan(1);
+  for (const b of firstRow) expect(Math.abs(b.h - firstRow[0].h)).toBeLessThan(2);
+  const multi = sculptures.find((x) => x.images.length > 1)!;
+  await expect(page.locator(`main ul a[href="/fr/sculptures/${multi.slug}"]`)).toHaveCount(multi.images.length);
 });
 
 test("header highlights the page you are on", async ({ page }) => {
@@ -109,26 +129,51 @@ test("hero shows the studio's Vimeo video in background mode", async ({ page }) 
   for (const param of ["background=1", "muted=1", "loop=1", "dnt=1"]) expect(src).toContain(param);
 });
 
-test("projects page lists the projects and opens one", async ({ page }) => {
-  await page.goto("/fr/architecture");
-  await expect(page.locator('main a[href^="/fr/architecture/"]')).toHaveCount(projectCount);
-  await page.getByRole("link", { name: /Patio Sol/ }).first().click();
-  await expect(page).toHaveURL(/\/fr\/architecture\/patio-sol/);
-  await expect(page.locator("h1")).toContainText("Patio Sol");
+test("architecture project sheets stay reachable by their address", async ({ page }) => {
+  const res = await page.goto(`/fr/architecture/${projectSlug}`);
+  expect(res?.status()).toBe(200);
+  await expect(page.locator("h1")).toBeVisible();
 });
 
-test("sculptures list, detail, request form", async ({ page }) => {
+test("sculpture sheet: small title and a 'Contact' button leading to the form", async ({ page }) => {
   await page.goto("/en/sculptures");
   await page.getByRole("link", { name: /Nopal/ }).first().click();
   await expect(page).toHaveURL(/\/en\/sculptures\/nopal/);
+  const size = await page.locator("h1").evaluate((h) => parseFloat(getComputedStyle(h).fontSize));
+  expect(size).toBeLessThanOrEqual(40);
+  await expect(page.getByText("Request this piece")).toHaveCount(0);
+  await page.getByRole("link", { name: "Contact", exact: true }).click();
   await expect(page.getByRole("button", { name: "Send" })).toBeVisible();
 });
 
-test("about shows email, phone and Instagram", async ({ page }) => {
+test("about: a 'Contact' block, the phone number on one line, Instagram with its logo", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/fr/a-propos");
+  await expect(page.getByText("Nous joindre")).toHaveCount(0);
+  await expect(page.locator("main").getByText("Contact", { exact: true })).toBeVisible();
   await expect(page.locator('main a[href^="mailto:"]').first()).toBeVisible();
-  await expect(page.locator('main a[href^="tel:"]').first()).toBeVisible();
-  await expect(page.locator('main a[href*="instagram.com/studio_a.c.e"]').first()).toBeVisible();
+  const tel = page.locator('main a[href^="tel:"]').first();
+  const lineHeight = await tel.evaluate((a) => parseFloat(getComputedStyle(a).lineHeight));
+  const box = await tel.boundingBox();
+  expect(box!.height).toBeLessThan(lineHeight * 1.5 + 22);
+  const insta = page.locator('main a[href*="instagram.com/studio_a.c.e"]').first();
+  await expect(insta.locator("svg")).toBeVisible();
+  await expect(insta).toContainText("studio a.c.e");
+});
+
+test("footer: Instagram logo before the studio name, legal notice under it, privacy link gone", async ({ page, request }) => {
+  await page.goto("/fr/a-propos");
+  const footer = page.locator("footer");
+  const insta = footer.locator('a[href*="instagram.com"]');
+  await expect(insta.locator("svg")).toHaveCount(1);
+  await expect(footer.getByRole("link", { name: "Confidentialité" })).toHaveCount(0);
+  const legal = footer.getByRole("link", { name: "Mentions légales" });
+  await expect(legal).toBeVisible();
+  expect((await legal.boundingBox())!.y).toBeGreaterThan((await insta.boundingBox())!.y);
+  const res = await request.get("/fr/confidentialite");
+  expect(res.url()).toMatch(/\/fr\/mentions-legales$/);
+  await page.goto("/fr/mentions-legales");
+  await expect(page.getByRole("heading", { name: "Données personnelles" })).toBeVisible();
 });
 
 test("the contact page and menu entry are gone", async ({ page, request }) => {
@@ -161,23 +206,6 @@ test("leads API validates input", async ({ request }) => {
   expect(res.status()).toBe(400);
 });
 
-for (const title of ["Patio Sol", "Terraza Norte"]) {
-  test(`${title}: card fades to its night view on hover`, async ({ page }) => {
-    await page.goto("/fr/architecture");
-    const card = page.getByRole("link", { name: new RegExp(title) }).first();
-    await card.scrollIntoViewIfNeeded();
-    const day = card.locator("img").nth(0);
-    const night = card.locator("img").nth(1);
-    await expect.poll(() => day.evaluate((i: HTMLImageElement) => i.complete && i.naturalWidth > 0)).toBe(true);
-    await expect.poll(() => night.evaluate((i: HTMLImageElement) => i.complete && i.naturalWidth > 0)).toBe(true);
-    await expect(night).toHaveCSS("opacity", "0");
-    await card.hover();
-    await expect(night).toHaveCSS("opacity", "1", { timeout: 4000 });
-    await page.mouse.move(0, 0);
-    await expect(night).toHaveCSS("opacity", "0", { timeout: 4000 });
-  });
-}
-
 test("sun/moon toggle switches the whole site to night and remembers it", async ({ page }) => {
   await page.goto("/fr/a-propos");
   const html = page.locator("html");
@@ -206,7 +234,7 @@ test("sculptures come in a random order, without status labels, and open their p
   const orders = new Set<string>();
   for (let i = 0; i < 8; i++) {
     const html = await (await request.get("/fr/sculptures")).text();
-    orders.add([...html.matchAll(/href="\/fr\/sculptures\/([a-z0-9-]+)"/g)].map((m) => m[1]).join(","));
+    orders.add([...html.matchAll(/src="([^"]*\/media\/sculptures\/[^"]+)"/g)].map((m) => m[1]).join(","));
   }
   expect(orders.size).toBeGreaterThan(1);
 
@@ -269,7 +297,7 @@ test("icon files browsers ask for exist, and odd paths never crash", async ({ re
 test.describe("iPhone layout", () => {
   test.use({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true });
 
-  for (const p of ["/fr", "/en", "/fr/architecture", "/fr/architecture/patio-sol", "/fr/sculptures", "/fr/sculptures/oaxaca", "/fr/a-propos", "/fr/mentions-legales"]) {
+  for (const p of ["/fr", "/en", "/fr/architecture", `/fr/architecture/${projectSlug}`, "/fr/sculptures", "/fr/sculptures/oaxaca", "/fr/a-propos", "/fr/mentions-legales"]) {
     test(`${p} never scrolls sideways`, async ({ page }) => {
       await page.goto(p);
       await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));

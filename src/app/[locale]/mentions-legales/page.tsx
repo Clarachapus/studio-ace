@@ -3,6 +3,7 @@ import { requireLocale, isLocale } from "@/i18n/locale";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getSite } from "@/lib/content";
 import { Section } from "@/components/ui/Section";
+import { privacySections } from "@/lib/legal";
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -40,6 +41,13 @@ export default async function LegalPage({ params }: Props) {
             ? "Les prix affichés sont indicatifs et hors frais de transport. Aucune vente n'est conclue sur ce site : toute demande fait l'objet d'un échange et d'un devis écrit."
             : "Displayed prices are indicative and exclude shipping. No sale is concluded on this site: every request leads to an exchange and a written quote."}
         </p>
+        <h2 className="mt-16 text-2xl" id="donnees-personnelles">{t("personalData")}</h2>
+        {privacySections(site, fr).map(([h, p]) => (
+          <div key={h}>
+            <h3 className="mt-8 text-lg">{h}</h3>
+            <p>{p}</p>
+          </div>
+        ))}
         <p className="mt-12 text-sm text-fg-soft">{fr ? "[À faire relire par un juriste avant mise en ligne.]" : "[To be reviewed by a lawyer before going live.]"}</p>
       </div>
     </Section>

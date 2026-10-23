@@ -29,7 +29,8 @@
     "surface": "Surface",
     "next": "Projet suivant",
     "back": "Toute l'architecture",
-    "empty": "Aucun projet pour l'instant."
+    "empty": "Aucun projet pour l'instant.",
+    "construction": "Site en construction"
   },
   "Sculptures": {
     "title": "Sculpture",
@@ -45,10 +46,11 @@
     "year": "Année",
     "price": "Prix",
     "onRequest": "Sur demande",
-    "request": "Demander cette pièce",
-    "requestSold": "Cette pièce est vendue. Demander une pièce similaire",
+    "request": "Contact",
+    "requestSold": "Contact",
     "back": "Toutes les sculptures",
-    "empty": "Aucune sculpture pour l'instant."
+    "empty": "Aucune sculpture pour l'instant.",
+    "mosaic": "Sculptures de studio a.c.e"
   },
   "About": {
     "acronymTitle": "A. C. E.",
@@ -58,13 +60,14 @@
     "storyTitle": "L'histoire",
     "workshopTitle": "L'atelier",
     "teamTitle": "L'équipe",
-    "contactTitle": "Nous joindre",
+    "contactTitle": "Contact",
     "email": "Email",
     "phone": "Téléphone",
     "instagram": "Instagram",
     "projectsTitle": "Projets",
     "exhibitionsTitle": "Expositions",
-    "pageLabel": "À propos"
+    "pageLabel": "À propos",
+    "portfolio": "Télécharger le portfolio"
   },
   "Contact": {
     "title": "Contact",
@@ -111,7 +114,8 @@
   },
   "Legal": {
     "title": "Mentions légales",
-    "privacyTitle": "Politique de confidentialité"
+    "privacyTitle": "Politique de confidentialité",
+    "personalData": "Données personnelles"
   },
   "NotFound": {
     "title": "Page introuvable",

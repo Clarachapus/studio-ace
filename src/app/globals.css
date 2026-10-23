@@ -313,3 +313,18 @@ h1, h2, h3, .font-display {
   mask: url("/media/brand/logo-mask.png") center / contain no-repeat;
   transition: background-color 0.6s ease;
 }
+
+/* ---------- White pages (Architecture) ----------
+   The whole page, header included, turns white by day; night mode keeps the dark ground. */
+:root:not([data-theme="dark"]):has(.page-white) { --bg: #ffffff; }
+
+/* ---------- Sculpture mosaic ----------
+   Each photo grows in proportion to its width/height ratio (--r): every row ends up
+   the same height and fills the width, without cropping. The last row keeps its size. */
+.mosaic { --row-h: 11rem; list-style: none; padding: 0; }
+@media (min-width: 768px) { .mosaic { --row-h: 19rem; } }
+@media (min-width: 1280px) { .mosaic { --row-h: 25rem; } }
+.mosaic__item { flex-grow: var(--r); flex-basis: calc(var(--row-h) * var(--r)); max-width: 100%; }
+.mosaic__end { flex-grow: 1000; flex-basis: 0; height: 0; }
+.mosaic__zone { outline: 1px solid transparent; outline-offset: -1px; transition: outline-color 0.25s ease, background-color 0.25s ease; }
+.mosaic__zone:hover, .mosaic__zone:focus-visible { outline-color: rgba(247, 241, 231, 0.9); background-color: rgba(247, 241, 231, 0.12); }

@@ -37,6 +37,19 @@ export default async function AboutPage({ params }: Props) {
               labels={{ title: t("contactTitle"), email: t("email"), phone: t("phone"), instagram: t("instagram") }}
               className="mt-10"
             />
+            {about.portfolio && (
+              <a
+                href={about.portfolio}
+                {...(about.portfolio.startsWith("/") ? { download: "" } : { target: "_blank", rel: "noreferrer" })}
+                className="mt-8 inline-flex items-center gap-2 border-b border-current pb-1 text-[0.95rem] transition-colors hover:text-menu"
+                data-testid="portfolio-link"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-4 w-4" aria-hidden>
+                  <path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 19.5h14" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                {t("portfolio")}
+              </a>
+            )}
           </aside>
 
           <div>

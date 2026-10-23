@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import { requireLocale, isLocale } from "@/i18n/locale";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { getSculptures } from "@/lib/content";
+import { getSculpturePage, getSculptures } from "@/lib/content";
 import { shuffle } from "@/lib/shuffle";
-import { Section, Eyebrow } from "@/components/ui/Section";
-import { Reveal } from "@/components/ui/Reveal";
-import { SculptureCard } from "@/components/sculptures/SculptureCard";
+import { mediaRatio } from "@/lib/media-sizes";
+import { Mosaic, type MosaicItem } from "@/components/sculptures/Mosaic";
 
 // A new random order on every visit, so the page never looks the same twice.
 export const dynamic = "force-dynamic";
@@ -19,31 +18,36 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return { title: t("title"), description: t("intro") };
 }
 
+/** Sculpture: photos only, every photo of every work plus the group photos, in a random order. */
 export default async function SculpturesPage({ params }: Props) {
   const { locale: raw } = await params;
   const locale = requireLocale(raw);
   setRequestLocale(locale);
-  const [t, sculptures] = await Promise.all([getTranslations("Sculptures"), getSculptures()]);
-  const list = shuffle(sculptures);
+  const [t, sculptures, page] = await Promise.all([getTranslations("Sculptures"), getSculptures(), getSculpturePage()]);
+  const titles = new Map(sculptures.map((s) => [s.slug, s[locale].title]));
+  const ratio = async (src: string) => (await mediaRatio(src)) ?? 1;
+
+  const photos = sculptures.flatMap((s) =>
+    s.images.map(async (src): Promise<MosaicItem> => ({ kind: "photo", key: `${s.slug}:${src}`, src, ratio: await ratio(src), slug: s.slug, title: s[locale].title })),
+  );
+  const groups = page.groups.map(
+    async (g, i): Promise<MosaicItem> => ({
+      kind: "group",
+      key: `group:${i}:${g.image}`,
+      src: g.image,
+      ratio: await ratio(g.image),
+      // A zone pointing to a deleted sculpture simply disappears.
+      zones: g.zones.flatMap((z) => (titles.has(z.slug) ? [{ ...z, title: titles.get(z.slug)! }] : [])),
+    }),
+  );
+  const items = shuffle(await Promise.all([...photos, ...groups]));
 
   return (
-    <Section mood="brut" className="pt-10 lg:pt-16">
-      <Reveal>
-        <div className="pt-6 lg:pt-12" data-reveal>
-          <Eyebrow>{t("title")}</Eyebrow>
-          <h1 className="mt-4 text-6xl leading-[0.9] lg:text-[9rem]">{t("title")}</h1>
-          <p className="mt-8 max-w-2xl text-lg text-fg-soft">{t("intro")}</p>
-        </div>
-        {list.length === 0 ? (
-          <p className="mt-16 text-fg-soft">{t("empty")}</p>
-        ) : (
-          <div className="mt-14 grid grid-cols-2 gap-x-5 gap-y-10 md:grid-cols-3 md:gap-x-10 md:gap-y-14">
-            {list.map((s) => (
-              <SculptureCard key={s.slug} sculpture={s} locale={locale} statusLabel={t(`status.${s.status}`)} onRequestLabel={t("onRequest")} variant="compact" />
-            ))}
-          </div>
-        )}
-      </Reveal>
-    </Section>
+    <section className="bg-bg">
+      <h1 className="sr-only">{t("title")}</h1>
+      <div className="mx-auto max-w-7xl px-5 pb-20 pt-24 sm:px-8 lg:px-12 lg:pt-32">
+        {items.length === 0 ? <p className="text-fg-soft">{t("empty")}</p> : <Mosaic items={items} label={t("mosaic")} />}
+      </div>
+    </section>
   );
 }

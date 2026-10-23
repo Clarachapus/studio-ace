@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import type { Site } from "@/lib/content";
+import { InstagramIcon, isInstagram } from "@/components/ui/InstagramIcon";
 
 export function Footer({ site, locale }: { site: Site; locale: string }) {
   const t = useTranslations("Footer");
@@ -28,18 +29,14 @@ export function Footer({ site, locale }: { site: Site; locale: string }) {
         </address>
         <div className="text-sm leading-7 opacity-85 md:text-right">
           {site.social.map((s) => (
-            <a key={s.url} href={s.url} target="_blank" rel="noreferrer" className="block py-1 hover:text-menu">
+            <a key={s.url} href={s.url} target="_blank" rel="noreferrer" className="flex items-center gap-2 py-1 hover:text-menu md:justify-end">
+              {isInstagram(s) && <InstagramIcon className="h-4 w-4 shrink-0" />}
               {s.label}
             </a>
           ))}
-          <div className="mt-3 flex gap-4 md:justify-end">
-            <Link href="/mentions-legales" className="inline-block py-2 hover:text-menu">
-              {t("legal")}
-            </Link>
-            <Link href="/confidentialite" className="inline-block py-2 hover:text-menu">
-              {t("privacy")}
-            </Link>
-          </div>
+          <Link href="/mentions-legales" className="mt-2 inline-block py-2 hover:text-menu">
+            {t("legal")}
+          </Link>
         </div>
       </div>
       <div className="flex justify-center pb-10">

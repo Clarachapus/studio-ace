@@ -4,7 +4,7 @@ import { getContentStore } from "./store";
 import type { Locale } from "@/i18n/routing";
 import type { LocalizedText, Project, Sculpture } from "./schemas";
 
-export type { About, Hero, Project, Sculpture, Site } from "./schemas";
+export type { About, ArchitecturePage, Hero, Project, Sculpture, SculpturePage, Site } from "./schemas";
 
 const store = () => getContentStore();
 
@@ -15,6 +15,8 @@ export const getSculpture = cache((slug: string) => store().getSculpture(slug));
 export const getAbout = cache(() => store().getAbout());
 export const getSite = cache(() => store().getSite());
 export const getHero = cache(() => store().getHero());
+export const getArchitecturePage = cache(() => store().getArchitecturePage());
+export const getSculpturePage = cache(() => store().getSculpturePage());
 
 export function text(entry: Project | Sculpture, locale: Locale): LocalizedText {
   return entry[locale];

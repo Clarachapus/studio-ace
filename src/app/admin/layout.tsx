@@ -9,8 +9,10 @@ export const metadata = { title: "Éditeur · studio a.c.e", robots: { index: fa
 
 const nav = [
   { href: "/admin", label: "Accueil" },
-  { href: "/admin/projects", label: "Projets" },
   { href: "/admin/sculptures", label: "Sculptures" },
+  { href: "/admin/photos-de-groupe", label: "Photos de groupe" },
+  { href: "/admin/architecture", label: "Architecture" },
+  { href: "/admin/projects", label: "Projets" },
   { href: "/admin/about", label: "À propos" },
   { href: "/admin/site", label: "Coordonnées & infos" },
 ];
@@ -24,7 +26,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
       <header className="sticky top-0 z-40 border-b border-line bg-cream/90 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center gap-6 px-5 h-14 text-sm">
           <span className="font-display tracking-[0.02em]">studio a.c.e · éditeur</span>
-          <nav className="flex gap-4">
+          <nav className="flex min-w-0 gap-4 overflow-x-auto whitespace-nowrap">
             {nav.map((n) => (
               <Link key={n.href} href={n.href} className="hover:text-menu">
                 {n.label}

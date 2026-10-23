@@ -51,7 +51,7 @@ export default async function SculpturePage({ params }: Props) {
               <Image src={first} alt={text.title} fill priority sizes="(min-width: 1024px) 55vw, 100vw" className="object-cover" />
             </div>
             <div className="lg:sticky lg:top-28">
-              <h1 className="text-6xl lg:text-8xl leading-[0.9]" data-reveal>{text.title}</h1>
+              <h1 className="text-3xl leading-tight lg:text-4xl" data-reveal>{text.title}</h1>
               <p className="mt-6 text-lg text-fg-soft" data-reveal>{text.summary}</p>
               <dl className="mt-10 grid grid-cols-2 gap-6 border-y border-line py-8" data-reveal>
                 <Meta label={t("material")} value={s.material} />
@@ -63,7 +63,7 @@ export default async function SculpturePage({ params }: Props) {
                 <Paragraphs text={text.description} />
               </div>
               <a href="#request" className="mt-10 inline-block rounded-full bg-terracotta px-8 py-4 text-sm uppercase tracking-[0.22em] text-cream transition-colors hover:bg-terracotta-deep" data-reveal>
-                {s.status === "sold" ? t("requestSold") : t("request")}
+                {t("request")}
               </a>
             </div>
           </div>
@@ -81,7 +81,7 @@ export default async function SculpturePage({ params }: Props) {
       <Section mood="editorial" id="request">
         <div className="mx-auto max-w-2xl">
           <Eyebrow>{t("request")}</Eyebrow>
-          <h2 className="mt-4 text-4xl lg:text-5xl">{text.title}</h2>
+          <h2 className="mt-4 text-2xl lg:text-3xl">{text.title}</h2>
           <LeadForm kind="sculpture" piece={`${text.title} (${s.slug})`} locale={locale} />
         </div>
       </Section>

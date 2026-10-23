@@ -2,19 +2,23 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import {
   aboutSchema,
+  architecturePageSchema,
   heroSchema,
+  sculpturePageSchema,
   projectSchema,
   sculptureSchema,
   siteSchema,
   slugSchema,
   type About,
+  type ArchitecturePage,
   type Hero,
+  type SculpturePage,
   type Project,
   type Sculpture,
   type Site,
 } from "./schemas";
 
-export type MediaKind = "projects" | "sculptures" | "about" | "hero";
+export type MediaKind = "projects" | "sculptures" | "about" | "hero" | "architecture";
 
 /**
  * Everything the site and the editor know about content goes through this
@@ -37,9 +41,29 @@ export interface ContentStore {
   getSite(): Promise<Site>;
   saveSite(site: Site): Promise<void>;
   getHero(): Promise<Hero>;
+  getArchitecturePage(): Promise<ArchitecturePage>;
+  saveArchitecturePage(page: ArchitecturePage): Promise<void>;
+  getSculpturePage(): Promise<SculpturePage>;
+  saveSculpturePage(page: SculpturePage): Promise<void>;
 
   /** Stores an image and returns its public path (starting with /media/). */
   uploadImage(kind: MediaKind, slug: string, file: File | Buffer, originalName: string): Promise<string>;
+  /** Stores a PDF as is and returns its public path (starting with /media/). */
+  uploadPdf(kind: MediaKind, slug: string, file: File | Buffer, originalName: string): Promise<string>;
+}
+
+/** File name safe for a URL: lowercase letters, digits and dashes, at most 40 characters. */
+export function safeBaseName(originalName: string, fallback = "image"): string {
+  return (
+    originalName
+      .replace(/\.[^.]+$/, "")
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 40) || fallback
+  );
 }
 
 export class ContentNotFoundError extends Error {}
@@ -144,6 +168,42 @@ export class FsContentStore implements ContentStore {
 
   getHero(): Promise<Hero> {
     return this.readJson(path.join(this.contentDir, "hero.json"), (r) => heroSchema.parse(r));
+  }
+
+  /** Optional pages: an empty page when the file does not exist yet. */
+  private async readPage<T>(name: string, parse: (raw: unknown) => T): Promise<T> {
+    try {
+      return await this.readJson(path.join(this.contentDir, "pages", `${name}.json`), parse);
+    } catch (err) {
+      if ((err as NodeJS.ErrnoException).code === "ENOENT") return parse({});
+      throw err;
+    }
+  }
+
+  getArchitecturePage(): Promise<ArchitecturePage> {
+    return this.readPage("architecture", (r) => architecturePageSchema.parse(r));
+  }
+
+  async saveArchitecturePage(page: ArchitecturePage): Promise<void> {
+    await this.writeJson(path.join(this.contentDir, "pages", "architecture.json"), architecturePageSchema.parse(page));
+  }
+
+  getSculpturePage(): Promise<SculpturePage> {
+    return this.readPage("sculptures", (r) => sculpturePageSchema.parse(r));
+  }
+
+  async saveSculpturePage(page: SculpturePage): Promise<void> {
+    await this.writeJson(path.join(this.contentDir, "pages", "sculptures.json"), sculpturePageSchema.parse(page));
+  }
+
+  async uploadPdf(kind: MediaKind, slug: string, file: File | Buffer, originalName: string): Promise<string> {
+    slugSchema.parse(slug);
+    const input = Buffer.isBuffer(file) ? file : Buffer.from(await file.arrayBuffer());
+    const dir = path.join(this.publicDir, "media", kind, slug);
+    await fs.mkdir(dir, { recursive: true });
+    const name = `${safeBaseName(originalName, "document")}.pdf`;
+    await fs.writeFile(path.join(dir, name), input);
+    return `/media/${kind}/${slug}/${name}`;
   }
 
   async uploadImage(kind: MediaKind, slug: string, file: File | Buffer, originalName: string): Promise<string> {

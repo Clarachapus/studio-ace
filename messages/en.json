@@ -29,7 +29,8 @@
     "surface": "Surface",
     "next": "Next project",
     "back": "All architecture",
-    "empty": "No projects yet."
+    "empty": "No projects yet.",
+    "construction": "Site under construction"
   },
   "Sculptures": {
     "title": "Sculpture",
@@ -45,10 +46,11 @@
     "year": "Year",
     "price": "Price",
     "onRequest": "On request",
-    "request": "Request this piece",
-    "requestSold": "This piece is sold. Ask for a similar one",
+    "request": "Contact",
+    "requestSold": "Contact",
     "back": "All sculptures",
-    "empty": "No sculptures yet."
+    "empty": "No sculptures yet.",
+    "mosaic": "Sculptures by studio a.c.e"
   },
   "About": {
     "acronymTitle": "A. C. E.",
@@ -58,13 +60,14 @@
     "storyTitle": "The story",
     "workshopTitle": "The workshop",
     "teamTitle": "The team",
-    "contactTitle": "Get in touch",
+    "contactTitle": "Contact",
     "email": "Email",
     "phone": "Phone",
     "instagram": "Instagram",
     "projectsTitle": "Projects",
     "exhibitionsTitle": "Exhibitions",
-    "pageLabel": "About"
+    "pageLabel": "About",
+    "portfolio": "Download the portfolio"
   },
   "Contact": {
     "title": "Contact",
@@ -111,7 +114,8 @@
   },
   "Legal": {
     "title": "Legal notice",
-    "privacyTitle": "Privacy policy"
+    "privacyTitle": "Privacy policy",
+    "personalData": "Personal data"
   },
   "NotFound": {
     "title": "Page not found",

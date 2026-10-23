@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import { requireLocale, isLocale } from "@/i18n/locale";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { getProjects } from "@/lib/content";
-import { Section, Eyebrow } from "@/components/ui/Section";
-import { Reveal } from "@/components/ui/Reveal";
-import { ProjectCard } from "@/components/projects/ProjectCard";
+import { getArchitecturePage } from "@/lib/content";
+import { Slideshow } from "@/components/architecture/Slideshow";
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -15,31 +13,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return { title: t("title"), description: t("intro") };
 }
 
-/** Architecture: the projects only, in an aligned grid (no categories, no filters). */
-export default async function ProjectsPage({ params }: Props) {
+/** Architecture, for now: white page, one image at a time and "site under construction". */
+export default async function ArchitecturePage({ params }: Props) {
   const { locale: raw } = await params;
   const locale = requireLocale(raw);
   setRequestLocale(locale);
-  const [t, projects] = await Promise.all([getTranslations("Projects"), getProjects()]);
+  const [t, page] = await Promise.all([getTranslations("Projects"), getArchitecturePage()]);
 
   return (
-    <Section mood="minimal" className="pt-10 lg:pt-16">
-      <Reveal>
-        <div className="pt-6 lg:pt-12" data-reveal>
-          <Eyebrow>{t("title")}</Eyebrow>
-          <h1 className="mt-4 text-5xl lg:text-7xl">{t("title")}</h1>
-          <p className="mt-6 max-w-2xl text-lg text-fg-soft">{t("intro")}</p>
-        </div>
-        {projects.length === 0 ? (
-          <p className="mt-16 text-fg-soft">{t("empty")}</p>
-        ) : (
-          <div className="mt-14 grid grid-cols-1 gap-x-10 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
-            {projects.map((p) => (
-              <ProjectCard key={p.slug} project={p} locale={locale} />
-            ))}
-          </div>
-        )}
-      </Reveal>
-    </Section>
+    <section className="page-white bg-bg">
+      <h1 className="sr-only">{t("title")}</h1>
+      <div className="mx-auto flex min-h-[calc(100svh-4rem)] max-w-7xl items-center px-5 pb-16 pt-24 sm:px-8 lg:min-h-[calc(100svh-5rem)] lg:px-12 lg:pt-28">
+        <Slideshow images={page.images} label={t("construction")} />
+      </div>
+    </section>
   );
 }

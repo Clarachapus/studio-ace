@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { About, AboutEntry } from "@/lib/content/schemas";
 import { Card, Field, LangTabs, SaveBar, describeIssues, inputCls, putJson, toParagraphs, type Lang, type SaveStatus } from "./FormKit";
 import { SingleImageField } from "./SingleImageField";
+import { PortfolioField } from "./PortfolioField";
 
 type ListKey = "projects" | "exhibitions";
 const emptyEntry: AboutEntry = { title: "", details: "", place: "", year: "" };
@@ -95,6 +96,10 @@ export function AboutForm({ initial }: { initial: About }) {
       <div className="mt-8 grid gap-6">
         <Card title="Portrait" help="Commun aux deux langues. Affiché en arche : garde le visage dans le haut de la photo.">
           <SingleImageField label="Photo" value={about.images.portrait} onChange={(p) => { touch(); setAbout((a) => ({ ...a, images: { ...a.images, portrait: p } })); }} arch />
+        </Card>
+
+        <Card title="Portfolio" help="Un lien « Télécharger le portfolio » apparaît sous les coordonnées, sur la page À propos.">
+          <PortfolioField value={about.portfolio} onChange={(p) => { touch(); setAbout((a) => ({ ...a, portfolio: p })); }} />
         </Card>
 
         <div className="sticky top-14 z-10 -mx-5 bg-cream/95 px-5 py-3 backdrop-blur">

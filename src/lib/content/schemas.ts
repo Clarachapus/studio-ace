@@ -10,6 +10,9 @@ const mediaPath = z
   .string()
   .regex(/^\/media\/[a-z0-9/_.-]+$/i, "image path must start with /media/");
 
+/** A file stored on the site (/media/...) or a link to another website. */
+const fileOrLink = z.union([mediaPath, z.string().url()]);
+
 export const localizedTextSchema = z.object({
   title: z.string().min(1),
   summary: z.string().default(""),
@@ -88,6 +91,8 @@ export const aboutSchema = z.object({
     portrait: mediaPath,
     workshop: mediaPath,
   }),
+  /** Portfolio offered for download on the About page: a PDF on the site or a link. */
+  portfolio: fileOrLink.nullable().default(null),
   fr: aboutLocaleSchema,
   en: aboutLocaleSchema,
 });
@@ -137,3 +142,27 @@ export const heroSchema = z.object({
   title: z.string().min(1),
 });
 export type Hero = z.infer<typeof heroSchema>;
+
+/** Architecture page: a slideshow of images (plans, photos) under "site under construction". */
+export const architecturePageSchema = z.object({
+  images: z.array(mediaPath).default([]),
+});
+export type ArchitecturePage = z.infer<typeof architecturePageSchema>;
+
+/** A clickable area of a group photo, in percent of the image (0 to 100). */
+export const groupZoneSchema = z.object({
+  slug: slugSchema,
+  x: z.number().min(0).max(100),
+  y: z.number().min(0).max(100),
+  w: z.number().gt(0).max(100),
+  h: z.number().gt(0).max(100),
+});
+export type GroupZone = z.infer<typeof groupZoneSchema>;
+
+/** Sculpture page: extra group photos showing several works, each one clickable. */
+export const sculpturePageSchema = z.object({
+  groups: z
+    .array(z.object({ image: mediaPath, zones: z.array(groupZoneSchema).default([]) }))
+    .default([]),
+});
+export type SculpturePage = z.infer<typeof sculpturePageSchema>;
