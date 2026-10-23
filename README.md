@@ -85,3 +85,4 @@ Tout passe par l'interface `ContentStore` (`src/lib/content/store.ts`). Remplace
 - En local, l'optimisation d'images Next est désactivée : les fichiers `._*` corrompent son cache sur exFAT. Elle reste active sur Vercel.
 - Les tests de bout en bout construisent dans `.next-e2e`, pour ne pas écraser le cache du serveur de dev.
 
+test
