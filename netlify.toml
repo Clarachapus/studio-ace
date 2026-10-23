@@ -2,6 +2,8 @@
 [build]
   command = "npm run build"
   publish = ".next"
+  # Skip deploys for photo-only commits (see the script): saves the free plan's monthly deploys.
+  ignore = "bash scripts/netlify-ignore.sh"
 
 [build.environment]
   NODE_VERSION = "22"
