@@ -55,11 +55,11 @@ export default async function AboutPage({ params }: Props) {
           <div>
             <div data-reveal>
               <Eyebrow>{t("pageLabel")}</Eyebrow>
-              <h1 className="mt-4 text-5xl lg:text-7xl">{a.title}</h1>
-              {a.subtitle && <p className="mt-4 text-base text-fg-soft lg:text-lg">{a.subtitle}</p>}
+              {/* The name and subtitle are no longer shown; the name stays as the page heading for screen readers and search engines. */}
+              <h1 className="sr-only">{a.title}</h1>
             </div>
 
-            <div className="editorial mt-10 max-w-prose" data-reveal>
+            <div className="editorial mt-6 max-w-prose" data-reveal>
               {a.intro && <p className="text-xl leading-relaxed lg:text-2xl">{a.intro}</p>}
               {a.story.map((paragraph, i) => (
                 <p key={i}>{paragraph}</p>

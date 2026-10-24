@@ -297,6 +297,9 @@ test("hero video is plain black and white with a sound button", async ({ page })
 test("about page follows the studio's structure: bio, projects and exhibitions", async ({ page }) => {
   await page.goto("/en/about");
   await expect(page.locator("h1")).toHaveText("Clara Chapus");
+  expect(await visibleText(page, "main h1")).toBe(0);
+  const subtitle = (readJson("content/pages/about.json") as { en: { subtitle: string } }).en.subtitle;
+  if (subtitle) await expect(page.getByText(subtitle)).toHaveCount(0);
   await expect(page.getByText("working between Paris and Mexico City")).toBeVisible();
   await expect(page.getByText("Projects", { exact: true })).toBeVisible();
   await expect(page.getByText("Exhibitions", { exact: true })).toBeVisible();
