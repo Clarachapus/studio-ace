@@ -33,9 +33,7 @@
   --fg: #f1e8da;
   --fg-soft: rgba(241, 232, 218, 0.62);
   --line: rgba(241, 232, 218, 0.14);
-  /* Night bordeaux: the site's bordeaux, lightened just enough to read on the blue. */
-  --menu: #b83b52;
-  --bordeaux: #b83b52;
+  /* Night keeps the exact day bordeaux (--menu and --bordeaux are not overridden). */
   color-scheme: dark;
 }
 

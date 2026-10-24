@@ -140,7 +140,7 @@ test("night mode keeps texts and logo in bordeaux, and turns plans into white li
   await page.goto("/fr/architecture");
   await page.getByRole("button", { name: "Passer en mode nuit" }).first().click();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
-  const bordeaux = "rgb(184, 59, 82)";
+  const bordeaux = "rgb(110, 30, 43)";
   await expect(page.getByRole("navigation", { name: "Rubriques du site" }).locator('a[aria-current="page"]')).toHaveCSS("color", bordeaux);
   await expect(page.getByTestId("architecture-slideshow").getByText("Site en construction")).toHaveCSS("color", bordeaux);
   await expect(page.getByTestId("footer-logo")).toHaveCSS("background-color", bordeaux);
