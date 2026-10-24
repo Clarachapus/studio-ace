@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return { title: t("title"), description: t("intro") };
 }
 
-/** Sculpture: photos only, every photo of every work plus the group photos, in a random order. */
+/** Sculpture: photos only, up to two per work plus the group photos, in a random order. */
 export default async function SculpturesPage({ params }: Props) {
   const { locale: raw } = await params;
   const locale = requireLocale(raw);
@@ -27,8 +27,10 @@ export default async function SculpturesPage({ params }: Props) {
   const titles = new Map(sculptures.map((s) => [s.slug, s[locale].title]));
   const ratio = async (src: string) => (await mediaRatio(src)) ?? 1;
 
+  // At most two photos per work, so none repeats too much: its main photo and one other, at random.
+  const pick = (images: string[]) => [images[0], ...shuffle(images.slice(1)).slice(0, 1)].filter(Boolean);
   const photos = sculptures.flatMap((s) =>
-    s.images.map(async (src): Promise<MosaicItem> => ({ kind: "photo", key: `${s.slug}:${src}`, src, ratio: await ratio(src), slug: s.slug, title: s[locale].title })),
+    pick(s.images).map(async (src): Promise<MosaicItem> => ({ kind: "photo", key: `${s.slug}:${src}`, src, ratio: await ratio(src), slug: s.slug, title: s[locale].title })),
   );
   const groups = page.groups.map(
     async (g, i): Promise<MosaicItem> => ({

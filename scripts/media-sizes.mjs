@@ -21,6 +21,14 @@ async function walk(dir) {
   return files.flat();
 }
 
+/** A plan or line drawing: mostly white paper (more than 60 % near-white pixels). */
+export async function isDrawing(file) {
+  const { data } = await sharp(file).flatten({ background: "#ffffff" }).greyscale().resize(96, 96, { fit: "fill" }).raw().toBuffer({ resolveWithObject: true });
+  let white = 0;
+  for (const v of data) if (v > 225) white++;
+  return white / data.length > 0.6;
+}
+
 const sizes = {};
 for (const file of (await walk(mediaDir)).sort()) {
   if (!exts.has(path.extname(file).toLowerCase())) continue;
@@ -29,11 +37,13 @@ for (const file of (await walk(mediaDir)).sort()) {
     const swap = (meta.orientation ?? 1) >= 5;
     const w = swap ? meta.height : meta.width;
     const h = swap ? meta.width : meta.height;
-    if (w && h) sizes["/" + path.relative(path.join(root, "public"), file).split(path.sep).join("/")] = [w, h];
+    if (!w || !h) continue;
+    const key = "/" + path.relative(path.join(root, "public"), file).split(path.sep).join("/");
+    sizes[key] = (await isDrawing(file)) ? [w, h, 1] : [w, h];
   } catch {
     // Unreadable file: the page falls back to a square frame.
   }
 }
 await fs.mkdir(path.dirname(out), { recursive: true });
 await fs.writeFile(out, JSON.stringify(sizes, null, 1) + "\n");
-console.log(`media-sizes: ${Object.keys(sizes).length} images`);
+console.log(`media-sizes: ${Object.keys(sizes).length} images, ${Object.values(sizes).filter((v) => v[2]).length} plans`);

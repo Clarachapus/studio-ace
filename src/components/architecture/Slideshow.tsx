@@ -5,18 +5,21 @@ import { useEffect, useState } from "react";
 import { Crane } from "@/components/ui/Crane";
 
 /** One image at a time, changing every two seconds, under "site under construction" and a crane. */
-export function Slideshow({ images, label }: { images: string[]; label: string }) {
+export type Slide = { src: string; drawing: boolean };
+
+/** Plans (drawing: true) turn to white lines on the night blue; photos stay as they are. */
+export function Slideshow({ slides, label }: { slides: Slide[]; label: string }) {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    if (images.length < 2) return;
-    const timer = window.setInterval(() => setIndex((i) => (i + 1) % images.length), 2000);
+    if (slides.length < 2) return;
+    const timer = window.setInterval(() => setIndex((i) => (i + 1) % slides.length), 2000);
     return () => window.clearInterval(timer);
-  }, [images.length]);
+  }, [slides.length]);
 
   return (
     <div className="relative mx-auto h-[62svh] min-h-[320px] w-full max-w-4xl" data-testid="architecture-slideshow">
-      {images.map((src, i) => (
+      {slides.map(({ src, drawing }, i) => (
         <Image
           key={src}
           src={src}
@@ -24,7 +27,7 @@ export function Slideshow({ images, label }: { images: string[]; label: string }
           fill
           priority={i === 0}
           sizes="(min-width: 1024px) 56rem, 100vw"
-          className={`object-contain transition-opacity duration-300 ${i === index ? "opacity-100" : "opacity-0"}`}
+          className={`object-contain transition-opacity duration-300 ${drawing ? "slide-drawing" : ""} ${i === index ? "opacity-100" : "opacity-0"}`}
           data-active={i === index ? "true" : undefined}
         />
       ))}

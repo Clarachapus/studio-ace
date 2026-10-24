@@ -33,7 +33,9 @@
   --fg: #f1e8da;
   --fg-soft: rgba(241, 232, 218, 0.62);
   --line: rgba(241, 232, 218, 0.14);
-  --menu: #e7a6b1;
+  /* Night bordeaux: the site's bordeaux, lightened just enough to read on the blue. */
+  --menu: #b83b52;
+  --bordeaux: #b83b52;
   color-scheme: dark;
 }
 
@@ -328,3 +330,8 @@ h1, h2, h3, .font-display {
 .mosaic__end { flex-grow: 1000; flex-basis: 0; height: 0; }
 .mosaic__zone { outline: 1px solid transparent; outline-offset: -1px; transition: outline-color 0.25s ease, background-color 0.25s ease; }
 .mosaic__zone:hover, .mosaic__zone:focus-visible { outline-color: rgba(247, 241, 231, 0.9); background-color: rgba(247, 241, 231, 0.12); }
+
+/* ---------- Plans at night (Architecture) ----------
+   Line drawings flip to white lines on the night blue: inverted, then blended so their
+   white paper takes the page colour. Photos are left as they are. */
+:root[data-theme="dark"] .slide-drawing { filter: invert(1) grayscale(1) contrast(1.25); mix-blend-mode: screen; }

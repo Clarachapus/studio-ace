@@ -5,7 +5,7 @@ import path from "node:path";
 const jsonFiles = (dir: string) => readdirSync(path.join(process.cwd(), dir)).filter((f) => f.endsWith(".json") && !f.startsWith("._"));
 const readJson = (file: string) => JSON.parse(readFileSync(path.join(process.cwd(), file), "utf8"));
 const sculptures = jsonFiles("content/sculptures").map((f) => readJson(`content/sculptures/${f}`) as { slug: string; images: string[]; fr: { title: string } });
-const photoCount = sculptures.reduce((n, s) => n + s.images.length, 0);
+const shownCount = sculptures.reduce((n, s) => n + Math.min(s.images.length, 2), 0);
 const visibleText = (page: import("@playwright/test").Page, selector: string) =>
   page.locator(selector).evaluateAll((els) => els.filter((e) => { const r = e.getBoundingClientRect(); return r.width > 2 && r.height > 2 && (e.textContent ?? "").trim(); }).length);
 const projectSlug = jsonFiles("content/projects")[0]?.replace(/\.json$/, "") ?? "goncourt";
@@ -98,11 +98,11 @@ test("architecture is a white page with one image at a time under 'site en const
   await expect.poll(active, { timeout: 3500 }).not.toBe(first);
 });
 
-test("sculpture page shows every photo of every work, without titles or text, in rows of mixed formats", async ({ page }) => {
+test("sculpture page shows at most two photos per work, without titles or text, in rows of mixed formats", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/fr/sculptures");
-  const links = page.locator('main ul a[href^="/fr/sculptures/"]');
-  await expect(links).toHaveCount(photoCount);
+  const links = page.locator('main ul li[data-kind="photo"] a[href^="/fr/sculptures/"]');
+  await expect(links).toHaveCount(shownCount);
   expect(await visibleText(page, "main h1, main h2, main h3, main p")).toBe(0);
   const boxes = await page.locator("main ul > li[data-kind]").evaluateAll((els) => els.map((e) => { const r = e.getBoundingClientRect(); return { top: Math.round(r.top), w: r.width, h: r.height }; }));
   const ratios = new Set(boxes.map((b) => (b.w / b.h).toFixed(1)));
@@ -110,8 +110,9 @@ test("sculpture page shows every photo of every work, without titles or text, in
   const firstRow = boxes.filter((b) => b.top === boxes[0].top);
   expect(firstRow.length).toBeGreaterThan(1);
   for (const b of firstRow) expect(Math.abs(b.h - firstRow[0].h)).toBeLessThan(2);
-  const multi = sculptures.find((x) => x.images.length > 1)!;
-  await expect(page.locator(`main ul a[href="/fr/sculptures/${multi.slug}"]`)).toHaveCount(multi.images.length);
+  for (const work of sculptures) {
+    await expect(page.locator(`main ul li[data-kind="photo"] a[href="/fr/sculptures/${work.slug}"]`)).toHaveCount(Math.min(work.images.length, 2));
+  }
 });
 
 test("header highlights the page you are on", async ({ page }) => {
@@ -135,10 +136,32 @@ test("architecture project sheets stay reachable by their address", async ({ pag
   await expect(page.locator("h1")).toBeVisible();
 });
 
+test("night mode keeps texts and logo in bordeaux, and turns plans into white lines on the night blue", async ({ page }) => {
+  await page.goto("/fr/architecture");
+  await page.getByRole("button", { name: "Passer en mode nuit" }).first().click();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+  const bordeaux = "rgb(184, 59, 82)";
+  await expect(page.getByRole("navigation", { name: "Rubriques du site" }).locator('a[aria-current="page"]')).toHaveCSS("color", bordeaux);
+  await expect(page.getByTestId("architecture-slideshow").getByText("Site en construction")).toHaveCSS("color", bordeaux);
+  await expect(page.getByTestId("footer-logo")).toHaveCSS("background-color", bordeaux);
+  const slides = await page.getByTestId("architecture-slideshow").locator("img").evaluateAll((imgs) =>
+    imgs.map((i) => ({ drawing: i.classList.contains("slide-drawing"), filter: getComputedStyle(i).filter, blend: getComputedStyle(i).mixBlendMode })),
+  );
+  const plans = slides.filter((x) => x.drawing);
+  expect(plans.length).toBeGreaterThan(0);
+  for (const x of plans) expect([x.filter, x.blend]).toEqual(["invert(1) grayscale(1) contrast(1.25)", "screen"]);
+  for (const x of slides.filter((y) => !y.drawing)) expect(x.filter).toBe("none");
+  await page.getByRole("button", { name: "Passer en mode jour" }).first().click();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+  const dayFilters = await page.getByTestId("architecture-slideshow").locator("img.slide-drawing").evaluateAll((imgs) => imgs.map((i) => getComputedStyle(i).filter));
+  for (const f of dayFilters) expect(f).toBe("none");
+});
+
 test("sculpture sheet: small title and a 'Contact' button leading to the form", async ({ page }) => {
+  const work = sculptures[0];
   await page.goto("/en/sculptures");
-  await page.getByRole("link", { name: /Nopal/ }).first().click();
-  await expect(page).toHaveURL(/\/en\/sculptures\/nopal/);
+  await page.locator(`main a[href="/en/sculptures/${work.slug}"]`).first().click();
+  await expect(page).toHaveURL(new RegExp(`/en/sculptures/${work.slug}$`));
   const size = await page.locator("h1").evaluate((h) => parseFloat(getComputedStyle(h).fontSize));
   expect(size).toBeLessThanOrEqual(40);
   await expect(page.getByText("Request this piece")).toHaveCount(0);
@@ -152,10 +175,13 @@ test("about: a 'Contact' block, the phone number on one line, Instagram with its
   await expect(page.getByText("Nous joindre")).toHaveCount(0);
   await expect(page.locator("main").getByText("Contact", { exact: true })).toBeVisible();
   await expect(page.locator('main a[href^="mailto:"]').first()).toBeVisible();
-  const tel = page.locator('main a[href^="tel:"]').first();
-  const lineHeight = await tel.evaluate((a) => parseFloat(getComputedStyle(a).lineHeight));
-  const box = await tel.boundingBox();
-  expect(box!.height).toBeLessThan(lineHeight * 1.5 + 22);
+  // The phone is optional (set in the editor): when shown, it fits on one line.
+  if (readJson("content/site.json").phone) {
+    const tel = page.locator('main a[href^="tel:"]').first();
+    const lineHeight = await tel.evaluate((a) => parseFloat(getComputedStyle(a).lineHeight));
+    const box = await tel.boundingBox();
+    expect(box!.height).toBeLessThan(lineHeight * 1.5 + 22);
+  }
   const insta = page.locator('main a[href*="instagram.com/studio_a.c.e"]').first();
   await expect(insta.locator("svg")).toBeVisible();
   await expect(insta).toContainText("studio a.c.e");

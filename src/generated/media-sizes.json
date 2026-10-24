@@ -21,31 +21,78 @@
  ],
  "/media/about/workshop.webp": [
   1600,
-  1000
+  1000,
+  1
  ],
  "/media/architecture/diaporama/01-plan.webp": [
   1566,
-  2057
+  2057,
+  1
  ],
  "/media/architecture/diaporama/02-plan.webp": [
   921,
-  2134
+  2134,
+  1
  ],
  "/media/architecture/diaporama/03-plan.webp": [
   2013,
-  2067
+  2067,
+  1
+ ],
+ "/media/architecture/diaporama/04-img-3331.webp": [
+  1536,
+  2048
+ ],
+ "/media/architecture/diaporama/05-img-3331.webp": [
+  1536,
+  2048
+ ],
+ "/media/architecture/diaporama/06-25-11-goncourt-com-cpe-prj-a4-50.webp": [
+  2339,
+  1653,
+  1
+ ],
+ "/media/architecture/diaporama/07-25-11-goncourt-com-plan-prj-a4-50.webp": [
+  2339,
+  1653,
+  1
+ ],
+ "/media/architecture/diaporama/08-2025-03-campeche-option-3-a4-100-modif.webp": [
+  1653,
+  2339,
+  1
+ ],
+ "/media/architecture/diaporama/09-maison-r-plan-2112-50-modif.webp": [
+  2400,
+  1696,
+  1
+ ],
+ "/media/architecture/diaporama/10-img-7882.webp": [
+  1800,
+  2400
+ ],
+ "/media/architecture/diaporama/11-img-7641.webp": [
+  1800,
+  2400
+ ],
+ "/media/architecture/diaporama/12-img-0434.webp": [
+  1800,
+  2400
  ],
  "/media/brand/logo-creme.png": [
   420,
-  688
+  688,
+  1
  ],
  "/media/brand/logo-mask.png": [
   420,
-  688
+  688,
+  1
  ],
  "/media/brand/logo-sombre.png": [
   420,
-  688
+  688,
+  1
  ],
  "/media/hero/layer-1-night.webp": [
   1600,
@@ -57,27 +104,33 @@
  ],
  "/media/hero/layer-2-night.webp": [
   1600,
-  1000
+  1000,
+  1
  ],
  "/media/hero/layer-2.webp": [
   1600,
-  1000
+  1000,
+  1
  ],
  "/media/hero/layer-4-night.webp": [
   1600,
-  1000
+  1000,
+  1
  ],
  "/media/hero/layer-4.webp": [
   1600,
-  1000
+  1000,
+  1
  ],
  "/media/projects/goncourt/01-capture-d-cran-2026-10-04-19-31-18.webp": [
   1166,
-  1720
+  1720,
+  1
  ],
  "/media/projects/goncourt/02-capture-d-cran-2026-10-04-19-31-41.webp": [
   1240,
-  1374
+  1374,
+  1
  ],
  "/media/projects/goncourt/03-gemini-generated-image-suupi8suupi8suup.webp": [
   1768,
@@ -99,6 +152,18 @@
   1200,
   1500
  ],
+ "/media/sculptures/arco-i/03-img-7633.webp": [
+  864,
+  1184
+ ],
+ "/media/sculptures/arco-i/04-gemini-generated-image-mqj9krmqj9krmqj9.webp": [
+  1792,
+  2400
+ ],
+ "/media/sculptures/arco-i/05-img-6473.webp": [
+  2048,
+  1536
+ ],
  "/media/sculptures/chapultepec/01-chapultepec.webp": [
   1315,
   1758
@@ -106,6 +171,10 @@
  "/media/sculptures/chapultepec/02-img-6338.webp": [
   1536,
   2048
+ ],
+ "/media/sculptures/entrada/01-falaise-face-3.webp": [
+  1361,
+  1815
  ],
  "/media/sculptures/escalera/01.webp": [
   1200,
@@ -115,13 +184,21 @@
   1200,
   1500
  ],
- "/media/sculptures/nopal/01.webp": [
-  1200,
-  1500
+ "/media/sculptures/escalera/03-5cdd786b-8fd5-43d5-8a69-eddb0a49b912-2.webp": [
+  750,
+  1210
  ],
- "/media/sculptures/nopal/02.webp": [
-  1200,
-  1500
+ "/media/sculptures/escalera/04-22def3bb-828f-4562-8b40-c5045434ea9a-1.webp": [
+  750,
+  1334
+ ],
+ "/media/sculptures/escalera/05-753fcc70-f0ca-483a-bcce-58c77a9fe215.webp": [
+  750,
+  1334
+ ],
+ "/media/sculptures/groupes/01-2025-batch.webp": [
+  2193,
+  1760
  ],
  "/media/sculptures/oaxaca/01-oaxaca.webp": [
   1315,
@@ -138,5 +215,25 @@
  "/media/sculptures/oaxaca/04-img-8204.webp": [
   704,
   939
+ ],
+ "/media/sculptures/recamara/01-chambre-face.webp": [
+  1354,
+  1805
+ ],
+ "/media/sculptures/recamara/02-chambre-1.webp": [
+  1697,
+  2263
+ ],
+ "/media/sculptures/recamara/03-chambre-2.webp": [
+  1697,
+  2263
+ ],
+ "/media/sculptures/recamara/04-chambre-3.webp": [
+  1697,
+  2263
+ ],
+ "/media/sculptures/recamara/05-chambre-4.webp": [
+  1697,
+  2263
  ]
 }
